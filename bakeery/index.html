@@ -1,0 +1,1662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nebula Bakes — Artisan Cosmic Patisserie</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%230D0D14' width='100' height='100'/><text x='50' y='70' font-size='60' text-anchor='middle' dominant-baseline='middle'>✨</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --ink:     #0D0D14;
+  --ink-2:   #1A1A28;
+  --ink-3:   #252535;
+  --gold:    #C8973F;
+  --gold-lt: #E8B86D;
+  --cream:   #F7F0E3;
+  --cream-2: #EDE4D3;
+  --text:    #F0EAD6;
+  --muted:   #9993A8;
+  --border:  rgba(200,151,63,.22);
+  --radius:  6px;
+  --nav-h:   72px;
+  --success: #4ade80;
+  --warning: #fbbf24;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--ink);
+  color: var(--text);
+  font-family: 'Jost', sans-serif;
+  font-weight: 400;
+  line-height: 1.65;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: '';
+  position: fixed; inset: 0; z-index: 9999;
+  pointer-events: none;
+  opacity: .025;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+}
+
+.container { max-width: 1180px; margin: 0 auto; padding: 0 32px; }
+.tag { display: inline-block; font-size: 11px; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; color: var(--gold); margin-bottom: 18px; }
+h1,h2,h3 { font-family: 'Cormorant Garamond', serif; font-weight: 400; line-height: 1.15; }
+h2 { font-size: clamp(34px, 5vw, 52px); color: var(--cream); }
+h3 { font-size: 22px; color: var(--cream); }
+img { display: block; width: 100%; object-fit: cover; }
+a { color: inherit; text-decoration: none; }
+
+/* ───PROMO BANNER─────────────────────────── */
+.promo-banner {
+  background: linear-gradient(90deg, var(--gold) 0%, var(--gold-lt) 100%);
+  color: var(--ink);
+  padding: 12px 0;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  animation: slideDown 0.6s ease;
+}
+.promo-banner strong { font-size: 13px; }
+
+/* ─── HEADER ─────────────────────────────────── */
+header {
+  position: sticky; top: 0; z-index: 200;
+  height: var(--nav-h);
+  display: flex; align-items: center;
+  background: rgba(13,13,20,.96);
+  backdrop-filter: blur(18px);
+  border-bottom: 1px solid var(--border);
+  box-shadow: 0 4px 16px rgba(0,0,0,.3);
+}
+
+.header-inner {
+  width: 100%; max-width: 1180px;
+  margin: 0 auto; padding: 0 32px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+
+.logo-block { display: flex; flex-direction: column; }
+.logo-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 26px; font-weight: 600;
+  letter-spacing: .04em;
+  color: var(--cream);
+  line-height: 1;
+}
+.logo-tag {
+  font-size: 9px; letter-spacing: .22em;
+  text-transform: uppercase; color: var(--gold);
+  margin-top: 3px;
+}
+
+nav { display: flex; gap: 36px; align-items: center; }
+nav a {
+  font-size: 13px; font-weight: 500; letter-spacing: .06em;
+  color: var(--muted); transition: color .25s;
+  text-transform: uppercase;
+}
+nav a:hover { color: var(--cream); }
+
+.header-actions {
+  display: flex; gap: 12px; align-items: center;
+}
+
+.btn {
+  display: inline-block; cursor: pointer;
+  font-family: 'Jost', sans-serif; font-size: 12px;
+  font-weight: 600; letter-spacing: .14em;
+  text-transform: uppercase; border: none; outline: none;
+  transition: all .3s;
+}
+.btn-gold {
+  background: var(--gold); color: var(--ink);
+  padding: 12px 28px; border-radius: var(--radius);
+}
+.btn-gold:hover {
+  background: var(--gold-lt);
+  transform: translateY(-1px);
+  box-shadow: 0 8px 30px rgba(200,151,63,.35);
+}
+.btn-outline {
+  background: transparent; color: var(--cream);
+  border: 1px solid var(--border); padding: 12px 28px;
+  border-radius: var(--radius);
+}
+.btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+
+.cart-icon {
+  position: relative;
+  cursor: pointer;
+  font-size: 20px;
+  transition: transform .3s;
+}
+.cart-icon:hover { transform: scale(1.1); }
+.cart-badge {
+  position: absolute; top: -10px; right: -10px;
+  background: var(--gold); color: var(--ink);
+  width: 20px; height: 20px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 9px; font-weight: 700;
+  opacity: 0;
+  transform: scale(0);
+  transition: all .3s;
+}
+.cart-badge.show {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.menu-toggle { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+.menu-toggle span { width: 22px; height: 1.5px; background: var(--cream); transition: all .3s; }
+
+/* ─── HERO ───────────────────────────────────── */
+.hero {
+  min-height: calc(100vh - var(--nav-h));
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 0;
+  overflow: hidden;
+  position: relative;
+}
+
+.hero-content {
+  padding: 80px 64px 80px 64px;
+  position: relative; z-index: 2;
+}
+
+.hero-eyebrow {
+  display: flex; align-items: center; gap: 12px;
+  margin-bottom: 32px;
+  animation: slideRight 0.8s ease 0.2s both;
+}
+.hero-eyebrow-line { width: 40px; height: 1px; background: var(--gold); }
+.hero-eyebrow-text {
+  font-size: 11px; font-weight: 600;
+  letter-spacing: .22em; text-transform: uppercase;
+  color: var(--gold);
+}
+
+.hero h1 {
+  font-size: clamp(46px, 6vw, 78px);
+  color: var(--cream);
+  margin-bottom: 24px;
+  animation: slideRight 0.8s ease 0.3s both;
+}
+
+.hero h1 em {
+  font-style: italic;
+  color: var(--gold-lt);
+}
+
+.hero-sub {
+  font-size: 16px; color: var(--muted);
+  max-width: 440px; margin-bottom: 48px;
+  line-height: 1.75;
+  animation: slideRight 0.8s ease 0.4s both;
+}
+
+.hero-actions { display: flex; gap: 16px; flex-wrap: wrap; animation: slideRight 0.8s ease 0.5s both; }
+
+.hero-stats {
+  margin-top: 64px; padding-top: 40px;
+  border-top: 1px solid var(--border);
+  display: flex; gap: 48px;
+  animation: slideRight 0.8s ease 0.6s both;
+}
+.stat-value {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 38px; color: var(--cream); line-height: 1;
+}
+.stat-label {
+  font-size: 11px; color: var(--muted);
+  letter-spacing: .1em; text-transform: uppercase;
+  margin-top: 5px;
+}
+
+.hero-visual {
+  height: 100%; min-height: 100vh;
+  position: relative; overflow: hidden;
+  animation: zoomIn 1.2s ease 0.5s both;
+}
+.hero-visual img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  filter: brightness(.75) saturate(1.1);
+}
+.hero-visual::before {
+  content: '';
+  position: absolute; inset: 0; z-index: 1;
+  background: linear-gradient(to right, var(--ink) 0%, transparent 30%);
+}
+
+/* ─── MARQUEE BAND ───────────────────────────── */
+.marquee-band {
+  background: var(--gold);
+  padding: 14px 0;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.marquee-track {
+  display: inline-block;
+  animation: marquee 28s linear infinite;
+}
+.marquee-track span {
+  font-size: 11px; font-weight: 700;
+  letter-spacing: .18em; text-transform: uppercase;
+  color: var(--ink);
+  padding: 0 32px;
+}
+.marquee-track span::after { content: '✦'; margin-left: 32px; }
+
+/* ─── FEATURES ───────────────────────────────── */
+.features { padding: 100px 0; }
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+  margin-top: 72px;
+  border: 1px solid var(--border);
+}
+.feature-item {
+  padding: 48px 40px;
+  border-right: 1px solid var(--border);
+  transition: background .3s;
+}
+.feature-item:last-child { border-right: none; }
+.feature-item:hover { background: var(--ink-2); }
+.feature-icon {
+  font-size: 28px; margin-bottom: 20px;
+  display: block;
+}
+.feature-item h3 {
+  font-size: 20px; margin-bottom: 12px;
+}
+.feature-item p {
+  font-size: 14px; color: var(--muted); line-height: 1.7;
+}
+
+/* ─── FILTER BAR ─────────────────────────────── */
+.filter-bar {
+  display: flex;
+  gap: 12px;
+  margin: 40px 0 64px 0;
+  flex-wrap: wrap;
+  animation: fadeIn 0.8s ease;
+}
+.filter-btn {
+  padding: 10px 20px;
+  background: var(--ink-2);
+  border: 1px solid var(--border);
+  color: var(--text);
+  border-radius: var(--radius);
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  transition: all .25s;
+}
+.filter-btn:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+.filter-btn.active {
+  background: var(--gold);
+  color: var(--ink);
+  border-color: var(--gold);
+}
+
+/* ─── PRODUCTS ───────────────────────────────── */
+.products { padding: 100px 0; background: var(--ink-2); }
+.section-header {
+  display: flex; justify-content: space-between;
+  align-items: flex-end; margin-bottom: 32px;
+}
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+  gap: 24px;
+}
+
+.product-card {
+  background: var(--ink);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform .35s cubic-bezier(.22,1,.36,1), box-shadow .35s, border-color .35s;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  animation: fadeInUp 0.6s ease;
+}
+.product-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 24px 60px rgba(0,0,0,.45), 0 0 0 1px rgba(200,151,63,.2);
+  border-color: rgba(200,151,63,.4);
+}
+.product-card:hover .product-img img {
+  transform: scale(1.06);
+}
+
+.product-img {
+  height: 220px; overflow: hidden; position: relative;
+}
+.product-img img { height: 100%; transition: transform .5s ease; }
+.product-badge {
+  position: absolute; top: 14px; left: 14px;
+  background: var(--gold); color: var(--ink);
+  font-size: 10px; font-weight: 700;
+  letter-spacing: .12em; text-transform: uppercase;
+  padding: 4px 10px; border-radius: 3px;
+  animation: slideDown 0.6s ease;
+}
+
+.product-rating {
+  position: absolute; top: 14px; right: 14px;
+  background: rgba(0,0,0,.7); color: var(--gold);
+  font-size: 10px; font-weight: 700;
+  padding: 6px 10px; border-radius: 3px;
+  backdrop-filter: blur(8px);
+}
+
+.product-body {
+  padding: 24px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.product-category {
+  font-size: 10px; font-weight: 600;
+  letter-spacing: .18em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 8px;
+}
+.product-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px; color: var(--cream);
+  margin-bottom: 10px; line-height: 1.25;
+}
+.product-desc {
+  font-size: 13px; color: var(--muted);
+  line-height: 1.65; margin-bottom: 20px;
+  flex: 1;
+}
+.product-footer {
+  display: flex; align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid var(--border);
+  padding-top: 18px;
+}
+.product-price {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 26px; color: var(--cream);
+}
+.product-price small {
+  font-size: 14px; color: var(--muted);
+  font-family: 'Jost', sans-serif;
+}
+
+.btn-sm {
+  font-family: 'Jost', sans-serif;
+  font-size: 11px; font-weight: 600;
+  letter-spacing: .12em; text-transform: uppercase;
+  padding: 9px 18px; border-radius: var(--radius);
+  border: 1px solid var(--gold); color: var(--gold);
+  background: transparent; cursor: pointer;
+  transition: all .25s;
+}
+.btn-sm:hover {
+  background: var(--gold); color: var(--ink);
+}
+
+.review-section {
+  margin-top: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.review-toggle {
+  width: 100%;
+  background: var(--ink-3);
+  border: 1px solid var(--border);
+  color: var(--text);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  font-size: 13px;
+  cursor: pointer;
+  text-align: left;
+  transition: background .25s, border-color .25s;
+}
+.review-toggle:hover {
+  background: rgba(200,151,63,.08);
+  border-color: var(--gold);
+}
+.review-form {
+  display: none;
+  gap: 12px;
+  margin-top: 12px;
+}
+.review-form.open {
+  display: grid;
+}
+.star-rating {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+  gap: 4px;
+}
+.star-rating input {
+  display: none;
+}
+.star-rating label {
+  font-size: 22px;
+  color: var(--muted);
+  cursor: pointer;
+  transition: color .2s;
+  line-height: 1;
+}
+.star-rating label:hover,
+.star-rating label:hover ~ label,
+.star-rating input:checked ~ label {
+  color: var(--gold);
+}
+.review-form textarea {
+  width: 100%;
+  min-height: 88px;
+  background: var(--ink-3);
+  color: var(--cream);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px;
+  font-size: 14px;
+  resize: vertical;
+}
+.review-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 6px;
+}
+.review-item {
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 10px;
+  padding: 14px;
+}
+.review-item-stars {
+  color: var(--gold);
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+.review-item-comment {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.6;
+}
+.review-empty {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+/* ─── TESTIMONIALS ───────────────────────────── */
+.testimonials { padding: 100px 0; }
+.testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px; margin-top: 64px;
+}
+.testimonial-card {
+  background: var(--ink-2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 36px;
+  transition: border-color .3s, transform .3s;
+  animation: fadeInUp 0.6s ease;
+}
+.testimonial-card:hover {
+  border-color: var(--gold);
+  transform: translateY(-4px);
+}
+.stars {
+  color: var(--gold);
+  font-size: 14px;
+  letter-spacing: 3px;
+  margin-bottom: 16px;
+}
+.testimonial-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 19px; font-style: italic;
+  color: var(--cream); line-height: 1.6;
+  margin-bottom: 24px;
+}
+.testimonial-author {
+  display: flex; align-items: center; gap: 12px;
+}
+.author-avatar {
+  width: 42px; height: 42px; border-radius: 50%;
+  background: var(--ink-3); overflow: hidden;
+  border: 2px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+}
+.author-name {
+  font-size: 13px; font-weight: 600; color: var(--cream);
+}
+.author-location {
+  font-size: 11px; color: var(--muted); margin-top: 2px;
+}
+
+/* ─── PROCESS ────────────────────────────────── */
+.process { padding: 100px 0; background: var(--ink-2); }
+.process-steps {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  margin-top: 72px;
+  position: relative;
+}
+.process-steps::before {
+  content: '';
+  position: absolute; top: 28px; left: 12.5%; right: 12.5%;
+  height: 1px; background: var(--border);
+}
+.step {
+  padding: 0 24px; text-align: center;
+  animation: fadeInUp 0.6s ease;
+}
+.step-number {
+  width: 56px; height: 56px;
+  background: var(--ink-3); border: 1px solid var(--border);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 24px;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px; color: var(--gold);
+  position: relative; z-index: 1;
+  transition: all .3s;
+}
+.step:hover .step-number {
+  background: var(--gold); color: var(--ink);
+  border-color: var(--gold);
+  box-shadow: 0 0 40px rgba(200,151,63,.3);
+}
+.step h3 { font-size: 18px; margin-bottom: 10px; }
+.step p { font-size: 13px; color: var(--muted); }
+
+/* ─── FAQ SECTION ────────────────────────────── */
+.faq-section { padding: 100px 0; }
+.faq-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  margin-top: 64px;
+  align-items: start;
+}
+.faq-intro { animation: fadeInUp 0.6s ease; }
+.faq-intro p { color: var(--muted); line-height: 1.8; margin-bottom: 24px; }
+
+.faq-list { animation: fadeInUp 0.6s ease 0.2s both; }
+.faq-item {
+  padding: 24px 0;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  transition: all .3s;
+}
+.faq-item:hover { padding-left: 12px; }
+.faq-question {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--cream);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.faq-toggle {
+  font-size: 20px;
+  transition: transform .3s;
+  flex-shrink: 0;
+}
+.faq-item.active .faq-toggle { transform: rotate(180deg); }
+.faq-answer {
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1.7;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height .35s ease, opacity .35s ease;
+  opacity: 0;
+  margin-top: 0;
+}
+.faq-item.active .faq-answer {
+  max-height: 200px;
+  opacity: 1;
+  margin-top: 16px;
+}
+
+/* ─── NEWSLETTER ─────────────────────────────── */
+.newsletter-section {
+  padding: 100px 0;
+  background: linear-gradient(135deg, var(--ink-2) 0%, var(--ink-3) 100%);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+.newsletter-wrap {
+  max-width: 600px;
+  margin: 0 auto;
+  text-align: center;
+  animation: fadeInUp 0.6s ease;
+}
+.newsletter-wrap h3 { font-size: 40px; margin-bottom: 12px; }
+.newsletter-wrap p { color: var(--muted); margin-bottom: 32px; font-size: 15px; }
+.newsletter-form {
+  display: flex;
+  gap: 12px;
+}
+.newsletter-form input {
+  flex: 1;
+  padding: 14px 20px;
+  background: var(--ink-3);
+  border: 1px solid var(--border);
+  color: var(--cream);
+  border-radius: var(--radius);
+  font-size: 14px;
+  transition: border-color .25s;
+}
+.newsletter-form input:focus {
+  outline: none;
+  border-color: var(--gold);
+}
+.newsletter-form input::placeholder { color: var(--muted); }
+.newsletter-form button {
+  padding: 14px 32px;
+  background: var(--gold);
+  color: var(--ink);
+  border: none;
+  border-radius: var(--radius);
+  font-weight: 700;
+  cursor: pointer;
+  transition: all .3s;
+  white-space: nowrap;
+}
+.newsletter-form button:hover {
+  background: var(--gold-lt);
+  transform: translateY(-2px);
+}
+
+/* ─── ORDER FORM ─────────────────────────────── */
+.order-section { padding: 100px 0; }
+.order-wrap {
+  display: grid; grid-template-columns: 1fr 1.2fr;
+  gap: 80px; align-items: start;
+}
+
+.order-info h2 { margin-bottom: 20px; }
+.order-info p { color: var(--muted); line-height: 1.8; margin-bottom: 32px; }
+.order-contact-item {
+  display: flex; align-items: center; gap: 14px;
+  margin-bottom: 18px; padding: 16px 20px;
+  background: var(--ink-2); border: 1px solid var(--border);
+  border-radius: var(--radius);
+  font-size: 14px;
+  transition: border-color .3s;
+}
+.order-contact-item:hover { border-color: var(--gold); }
+.order-contact-item .icon {
+  font-size: 20px; flex-shrink: 0;
+}
+
+.order-form {
+  background: var(--ink-2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 48px;
+}
+.form-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 30px; color: var(--cream);
+  margin-bottom: 8px;
+}
+.form-sub {
+  font-size: 13px; color: var(--muted);
+  margin-bottom: 36px;
+}
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.form-group { margin-bottom: 20px; }
+label {
+  display: block; font-size: 11px; font-weight: 600;
+  letter-spacing: .12em; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 8px;
+}
+input, select, textarea {
+  width: 100%; padding: 13px 16px;
+  background: var(--ink-3); color: var(--cream);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  font-family: 'Jost', sans-serif; font-size: 14px;
+  transition: border-color .25s, box-shadow .25s;
+  outline: none; appearance: none;
+}
+input::placeholder, textarea::placeholder { color: var(--muted); }
+input:focus, select:focus, textarea:focus {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(200,151,63,.12);
+}
+select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%239993A8' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; padding-right: 40px; cursor: pointer; }
+select option { background: var(--ink-2); color: var(--cream); }
+textarea { resize: vertical; min-height: 90px; }
+
+.qty-row { display: flex; gap: 0; }
+.qty-btn {
+  width: 44px; height: 46px;
+  background: var(--ink-3); border: 1px solid var(--border);
+  color: var(--cream); font-size: 18px; cursor: pointer;
+  transition: all .2s;
+  flex-shrink: 0; display: flex; align-items: center; justify-content: center;
+}
+.qty-btn:first-child { border-radius: var(--radius) 0 0 var(--radius); border-right: none; }
+.qty-btn:last-child { border-radius: 0 var(--radius) var(--radius) 0; border-left: none; }
+.qty-btn:hover { background: var(--gold); color: var(--ink); border-color: var(--gold); }
+.qty-input {
+  border-radius: 0; text-align: center;
+  border-left: none; border-right: none;
+  width: 70px; flex-shrink: 0;
+}
+
+.submit-btn {
+  width: 100%; margin-top: 8px;
+  padding: 16px;
+  background: var(--gold); color: var(--ink);
+  border: none; border-radius: var(--radius);
+  font-family: 'Jost', sans-serif;
+  font-size: 13px; font-weight: 700;
+  letter-spacing: .14em; text-transform: uppercase;
+  cursor: pointer;
+  transition: all .3s;
+}
+.submit-btn:hover {
+  background: var(--gold-lt);
+  box-shadow: 0 10px 40px rgba(200,151,63,.4);
+  transform: translateY(-2px);
+}
+
+/* ─── CONTACT ────────────────────────────────── */
+.contact-section { padding: 100px 0; background: var(--ink-2); }
+.contact-grid {
+  display: grid; grid-template-columns: 1.4fr 1fr;
+  gap: 80px; align-items: start; margin-top: 64px;
+}
+
+.contact-map {
+  height: 380px;
+  background: var(--ink-3);
+  border: 1px solid var(--border);
+  border-radius: 10px; overflow: hidden;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 12px; color: var(--muted);
+  font-size: 14px;
+}
+.contact-map iframe {
+  width: 100%; height: 100%; border: none;
+  filter: grayscale(80%) invert(90%) hue-rotate(180deg);
+}
+
+.contact-details h3 {
+  font-size: 26px; margin-bottom: 28px;
+}
+.contact-item {
+  display: flex; gap: 16px;
+  padding: 20px 0;
+  border-bottom: 1px solid var(--border);
+}
+.contact-item:last-of-type { border-bottom: none; }
+.contact-item-icon { font-size: 20px; margin-top: 2px; }
+.contact-item-label {
+  font-size: 10px; font-weight: 600;
+  letter-spacing: .15em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 4px;
+}
+.contact-item-value { font-size: 14px; color: var(--text); }
+.contact-item-value a { color: var(--text); transition: color .2s; }
+.contact-item-value a:hover { color: var(--gold); }
+
+.social-row {
+  display: flex; gap: 12px; margin-top: 28px;
+}
+.social-btn {
+  width: 44px; height: 44px;
+  background: var(--ink-3); border: 1px solid var(--border);
+  border-radius: var(--radius);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; cursor: pointer;
+  transition: all .25s; color: var(--muted);
+  text-decoration: none;
+}
+.social-btn:hover {
+  background: var(--gold); color: var(--ink);
+  border-color: var(--gold); transform: translateY(-3px);
+}
+
+/* ─── FOOTER ─────────────────────────────────── */
+footer {
+  background: var(--ink); border-top: 1px solid var(--border);
+  padding: 48px 0;
+}
+.footer-inner {
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 20px;
+}
+.footer-copy { font-size: 13px; color: var(--muted); }
+.footer-links { display: flex; gap: 28px; }
+.footer-links a { font-size: 12px; color: var(--muted); letter-spacing: .06em; transition: color .2s; }
+.footer-links a:hover { color: var(--gold); }
+
+/* ─── WHATSAPP FLOAT ─────────────────────────── */
+.wa-float {
+  position: fixed; bottom: 28px; right: 28px; z-index: 1000;
+  background: #25D366; color: white;
+  width: 58px; height: 58px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 26px;
+  box-shadow: 0 8px 32px rgba(37,211,102,.45);
+  transition: transform .3s, box-shadow .3s;
+  cursor: pointer;
+  text-decoration: none;
+}
+.wa-float:hover {
+  transform: scale(1.1);
+  box-shadow: 0 12px 40px rgba(37,211,102,.65);
+}
+
+/* ─── TOAST ──────────────────────────────────── */
+.toast {
+  position: fixed; bottom: 100px; right: 28px; z-index: 2000;
+  background: var(--ink-2); border: 1px solid var(--gold);
+  border-radius: 10px; padding: 20px 28px;
+  display: flex; align-items: center; gap: 14px;
+  box-shadow: 0 20px 60px rgba(0,0,0,.6);
+  transform: translateX(120%);
+  transition: transform .5s cubic-bezier(.22,1,.36,1);
+  max-width: 360px;
+  animation: none;
+}
+.toast.show { transform: translateX(0); }
+.toast-icon { font-size: 24px; }
+.toast-text { font-size: 14px; color: var(--cream); line-height: 1.5; }
+.toast-title { font-weight: 600; color: var(--gold); margin-bottom: 2px; }
+
+/* ─── ANIMATIONS ─────────────────────────────── */
+@keyframes slideDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: none; } }
+@keyframes slideRight { from { opacity: 0; transform: translateX(-30px); } to { opacity: 1; transform: none; } }
+@keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: none; } }
+@keyframes zoomIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: none; } }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: none; } }
+@keyframes marquee { to { transform: translateX(-50%); } }
+
+/* ─── REVEAL ──────────────────────────────────── */
+.reveal {
+  opacity: 0; transform: translateY(28px);
+  transition: opacity .7s ease, transform .7s ease;
+}
+.reveal.visible {
+  opacity: 1; transform: none;
+}
+
+/* ─── RESPONSIVE ─────────────────────────────── */
+@media (max-width: 900px) {
+  .hero { grid-template-columns: 1fr; }
+  .hero-visual { display: none; }
+  .hero-content { padding: 60px 32px; }
+  .features-grid { grid-template-columns: 1fr; gap: 0; }
+  .feature-item { border-right: none; border-bottom: 1px solid var(--border); }
+  .testimonials-grid { grid-template-columns: 1fr; }
+  .process-steps { grid-template-columns: 1fr 1fr; gap: 40px; }
+  .process-steps::before { display: none; }
+  .order-wrap { grid-template-columns: 1fr; gap: 48px; }
+  .contact-grid { grid-template-columns: 1fr; }
+  .section-header { flex-direction: column; align-items: flex-start; gap: 20px; }
+  .faq-grid { grid-template-columns: 1fr; gap: 40px; }
+  nav { display: none; }
+  .nav-open nav { display: flex; flex-direction: column; position: absolute; top: var(--nav-h); left: 0; right: 0; background: var(--ink-2); padding: 24px 32px; border-bottom: 1px solid var(--border); }
+  .menu-toggle { display: flex; }
+  .form-row { grid-template-columns: 1fr; }
+  .newsletter-form { flex-direction: column; }
+}
+@media (max-width: 600px) {
+  .container { padding: 0 20px; }
+  .order-form { padding: 28px 20px; }
+  .hero-stats { flex-wrap: wrap; gap: 24px; }
+  .process-steps { grid-template-columns: 1fr; }
+  .filter-bar { gap: 8px; }
+  .filter-btn { padding: 8px 12px; font-size: 11px; }
+}
+</style>
+</head>
+<body>
+
+<!-- PROMO BANNER -->
+<div class="promo-banner">
+  🎉 <strong>LIMITED TIME:</strong> Order 3+ items & get FREE delivery! Use code: <strong>COSMIC2025</strong>
+</div>
+
+<!-- WHATSAPP FLOAT -->
+<a class="wa-float" href="https://wa.me/63970698135?text=Hi%20Nebula%20Bakes!%20I%27d%20like%20to%20place%20an%20order." target="_blank" title="Order via WhatsApp">💬</a>
+
+<!-- TOAST -->
+<div class="toast" id="toast">
+  <div class="toast-icon">✨</div>
+  <div class="toast-text">
+    <div class="toast-title">Order Received!</div>
+    <div id="toast-msg">We'll be in touch shortly.</div>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header id="site-header">
+  <div class="header-inner">
+    <div class="logo-block">
+      <span class="logo-name">✦ Nebula Bakes</span>
+      <span class="logo-tag">Artisan Cosmic Patisserie</span>
+    </div>
+    <nav>
+      <a href="../portfolio.html">Portfolio</a>
+      <a href="#products">Menu</a>
+      <a href="#process">How It Works</a>
+      <a href="#reviews">Reviews</a>
+      <a href="#faq">FAQ</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <div class="header-actions">
+      <a href="#order" class="btn btn-gold">Order Now</a>
+      <div class="menu-toggle" onclick="toggleMenu()">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-eyebrow">
+      <div class="hero-eyebrow-line"></div>
+      <div class="hero-eyebrow-text">Handcrafted · Small Batch · Made with Love</div>
+    </div>
+    <h1>Baked Beyond<br><em>the Ordinary</em></h1>
+    <p class="hero-sub">Every pastry, cake, and loaf we make is crafted to feel like a moment out of this world. Artisan quality, cosmic creativity, delivered fresh to your door.</p>
+    <div class="hero-actions">
+      <a href="#products" class="btn btn-gold">Browse Our Menu</a>
+      <a href="#order" class="btn btn-outline">Place an Order</a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="stat-value">500+</div>
+        <div class="stat-label">Happy Customers</div>
+      </div>
+      <div>
+        <div class="stat-value">4.9★</div>
+        <div class="stat-label">Average Rating</div>
+      </div>
+      <div>
+        <div class="stat-value">100%</div>
+        <div class="stat-label">Fresh Daily</div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <img src="https://images.unsplash.com/photo-1606890737304-57a1ca8a5b62?w=900&q=80" alt="Artisan baked goods">
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-band">
+  <div class="marquee-track">
+    <span>Custom Cakes</span>
+    <span>Artisan Bread</span>
+    <span>Cosmic Pastries</span>
+    <span>Celebration Cakes</span>
+    <span>Daily Fresh</span>
+    <span>Same Day Delivery</span>
+    <span>Custom Cakes</span>
+    <span>Artisan Bread</span>
+    <span>Cosmic Pastries</span>
+    <span>Celebration Cakes</span>
+    <span>Daily Fresh</span>
+    <span>Same Day Delivery</span>
+  </div>
+</div>
+
+<!-- FEATURES -->
+<section class="features">
+  <div class="container">
+    <div class="reveal">
+      <div class="tag">Why Nebula Bakes</div>
+      <h2>Quality You Can<br><em style="font-style:italic;color:var(--gold-lt)">Taste in Every Bite</em></h2>
+    </div>
+    <div class="features-grid reveal">
+      <div class="feature-item">
+        <span class="feature-icon">🌿</span>
+        <h3>All-Natural Ingredients</h3>
+        <p>No preservatives, no shortcuts. We source fresh, natural ingredients for every single item we bake.</p>
+      </div>
+      <div class="feature-item">
+        <span class="feature-icon">🎂</span>
+        <h3>Custom Orders Welcome</h3>
+        <p>Special occasion coming up? We design and bake custom cakes and treats tailored exactly to your vision.</p>
+      </div>
+      <div class="feature-item">
+        <span class="feature-icon">🚀</span>
+        <h3>Same-Day Delivery</h3>
+        <p>Order before noon and receive your fresh-baked items the same day. Freshness is our promise.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCTS -->
+<section class="products" id="products">
+  <div class="container">
+    <div class="section-header reveal">
+      <div>
+        <div class="tag">Our Menu</div>
+        <h2>Stellar Selections</h2>
+      </div>
+      <a href="#order" class="btn btn-outline">Order Now →</a>
+    </div>
+
+    <!-- FILTER BAR -->
+    <div class="filter-bar">
+      <button class="filter-btn active" onclick="filterProducts('all')">All Items</button>
+      <button class="filter-btn" onclick="filterProducts('Signature Cakes')">Cakes</button>
+      <button class="filter-btn" onclick="filterProducts('Pastries')">Pastries</button>
+      <button class="filter-btn" onclick="filterProducts('Breads')">Breads</button>
+      <button class="filter-btn" onclick="filterProducts('Desserts')">Desserts</button>
+    </div>
+
+    <div class="products-grid" id="products-grid">
+      <!-- JS rendered -->
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section class="testimonials" id="reviews">
+  <div class="container">
+    <div class="reveal" style="text-align:center;max-width:600px;margin:0 auto 20px">
+      <div class="tag">Recommended Pairings</div>
+      <h2>Perfect Combos to Add to Your Order</h2>
+    </div>
+    <div class="testimonials-grid reveal">
+      <div class="testimonial-card">
+        <div class="stars">✨ Pair This With</div>
+        <p class="testimonial-text">Enjoy the Galaxy Drip Cake alongside Stardust Macarons for a celebration that feels both elegant and delightfully sweet.</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">🎂</div>
+          <div>
+            <div class="author-name">Cake + Macarons</div>
+            <div class="author-location">Best for parties & gifts</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars">✨ Pair This With</div>
+        <p class="testimonial-text">Add Aurora Sourdough and Nebula Tiramisu to your order for a rich, creamy dessert after a savory bread course.</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">🥖</div>
+          <div>
+            <div class="author-name">Bread + Dessert</div>
+            <div class="author-location">Perfect for dinner gatherings</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars">✨ Pair This With</div>
+        <p class="testimonial-text">Choose Supernova Brownies with Stellar Croissants for a mix of decadent chocolate and flaky breakfast indulgence.</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">🍫</div>
+          <div>
+            <div class="author-name">Sweet + Flaky</div>
+            <div class="author-location">Great for brunch or gifts</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="process" id="process">
+  <div class="container">
+    <div class="reveal" style="text-align:center;max-width:540px;margin:0 auto">
+      <div class="tag">How It Works</div>
+      <h2>Ordering Is Simple</h2>
+    </div>
+    <div class="process-steps reveal">
+      <div class="step">
+        <div class="step-number">01</div>
+        <h3>Browse the Menu</h3>
+        <p>Pick from our selection of freshly baked breads, pastries, cakes, and desserts.</p>
+      </div>
+      <div class="step">
+        <div class="step-number">02</div>
+        <h3>Place Your Order</h3>
+        <p>Fill out the order form below or message us on WhatsApp with your request.</p>
+      </div>
+      <div class="step">
+        <div class="step-number">03</div>
+        <h3>We Bake Fresh</h3>
+        <p>Your order is baked fresh to order — no day-old items, ever.</p>
+      </div>
+      <div class="step">
+        <div class="step-number">04</div>
+        <h3>Delivered to You</h3>
+        <p>Same-day or scheduled delivery right to your door, always on time.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ SECTION -->
+<section class="faq-section" id="faq">
+  <div class="container">
+    <div class="reveal" style="max-width:600px">
+      <div class="tag">Got Questions?</div>
+      <h2>Frequently Asked Questions</h2>
+    </div>
+    <div class="faq-grid">
+      <div class="faq-intro reveal">
+        <p>Everything you need to know about ordering from Nebula Bakes. Can't find your answer? <strong>Reach out on WhatsApp!</strong></p>
+        <div style="margin-top:24px;padding:20px;background:var(--ink-2);border:1px solid var(--border);border-radius:var(--radius)">
+          <div style="font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);margin-bottom:8px">Quick Support</div>
+          <a href="https://wa.me/63970698135" style="color:var(--text);font-size:14px">💬 Message us on WhatsApp</a>
+        </div>
+      </div>
+      <div class="faq-list">
+        <div class="faq-item" onclick="toggleFAQ(this)">
+          <div class="faq-question">
+            <span>Do you do custom orders?</span>
+            <span class="faq-toggle">▼</span>
+          </div>
+          <div class="faq-answer">Yes! We love custom orders. Contact us at least 3 days in advance for custom cakes and special requests. We'll work with you to bring your vision to life.</div>
+        </div>
+        <div class="faq-item" onclick="toggleFAQ(this)">
+          <div class="faq-question">
+            <span>What's your delivery area?</span>
+            <span class="faq-toggle">▼</span>
+          </div>
+          <div class="faq-answer">We deliver to Palinpinon, Valencia, and nearby areas. For locations outside our usual area, reach out via WhatsApp and we'll check if we can arrange delivery.</div>
+        </div>
+        <div class="faq-item" onclick="toggleFAQ(this)">
+          <div class="faq-question">
+            <span>How much is delivery?</span>
+            <span class="faq-toggle">▼</span>
+          </div>
+          <div class="faq-answer">Delivery is FREE on orders of ₱3,000 or more! Orders under ₱3,000 have a flat ₱150 delivery fee. Same-day orders must be placed before noon.</div>
+        </div>
+        <div class="faq-item" onclick="toggleFAQ(this)">
+          <div class="faq-question">
+            <span>Do you have allergen info?</span>
+            <span class="faq-toggle">▼</span>
+          </div>
+          <div class="faq-answer">Most of our items contain nuts, dairy, eggs, and/or gluten. If you have allergies, please mention them in the special instructions or message us directly.</div>
+        </div>
+        <div class="faq-item" onclick="toggleFAQ(this)">
+          <div class="faq-question">
+            <span>What payment methods do you accept?</span>
+            <span class="faq-toggle">▼</span>
+          </div>
+          <div class="faq-answer">We accept GCash, Maya, bank transfers, and Cash on Delivery (COD). Payment is due before delivery for online transfers.</div>
+        </div>
+        <div class="faq-item" onclick="toggleFAQ(this)">
+          <div class="faq-question">
+            <span>How long can I store your baked goods?</span>
+            <span class="faq-toggle">▼</span>
+          </div>
+          <div class="faq-answer">Fresh pastries are best enjoyed the same day. Breads stay fresh for 2-3 days in an airtight container. Cakes can be refrigerated for up to 5 days.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NEWSLETTER -->
+<section class="newsletter-section">
+  <div class="container">
+    <div class="newsletter-wrap">
+      <h3>Join Our Cosmic Club</h3>
+      <p>Get exclusive offers, baking tips, and sneak peeks at new creations. Your inbox will never be boring.</p>
+      <form class="newsletter-form" onsubmit="subscribeNewsletter(event)">
+        <input type="email" placeholder="Your email address" required>
+        <button type="submit">Subscribe</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ORDER FORM -->
+<section class="order-section" id="order">
+  <div class="container">
+    <div class="order-wrap">
+      <div class="order-info reveal">
+        <div class="tag">Place an Order</div>
+        <h2>Ready to Order?<br><em style="font-style:italic;color:var(--gold-lt)">Let's Get Baking.</em></h2>
+        <p>Fill out the form and we'll confirm your order within the hour. You can also reach us directly through any of the channels below.</p>
+
+        <div class="order-contact-item">
+          <span class="icon">💬</span>
+          <div>
+            <div style="font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:3px">WhatsApp</div>
+            <a href="https://wa.me/63970698135" style="font-size:14px;color:var(--text)">09970698135</a>
+          </div>
+        </div>
+        <div class="order-contact-item">
+          <span class="icon">📧</span>
+          <div>
+            <div style="font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:3px">Email</div>
+            <a href="mailto:orders@nebulabakes.com" style="font-size:14px;color:var(--text)">orders@nebulabakes.com</a>
+          </div>
+        </div>
+        <div class="order-contact-item">
+          <span class="icon">🕐</span>
+          <div>
+            <div style="font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:3px">Business Hours</div>
+            <span style="font-size:14px">Mon–Sat: 7:00 AM – 7:00 PM</span>
+          </div>
+        </div>
+        <div class="order-contact-item">
+          <span class="icon">💳</span>
+          <div>
+            <div style="font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:3px">Payment</div>
+            <span style="font-size:14px">GCash · Maya · Bank Transfer · COD</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="order-form reveal">
+        <div class="form-title">New Order</div>
+        <div class="form-sub">All fields marked * are required.</div>
+        <form id="order-form" onsubmit="submitOrder(event)">
+          <div class="form-row">
+            <div class="form-group">
+              <label>First Name *</label>
+              <input type="text" id="f-first" placeholder="Maria" required>
+            </div>
+            <div class="form-group">
+              <label>Last Name *</label>
+              <input type="text" id="f-last" placeholder="Santos" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Phone / WhatsApp *</label>
+            <input type="tel" id="f-phone" placeholder="09970698135" required>
+          </div>
+          <div class="form-group">
+            <label>Product *</label>
+            <select id="f-product" required>
+              <option value="">Select an item…</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Quantity *</label>
+            <div class="qty-row">
+              <button type="button" class="qty-btn" onclick="changeQty(-1)">−</button>
+              <input type="number" class="qty-input" id="f-qty" value="1" min="1" max="99" required>
+              <button type="button" class="qty-btn" onclick="changeQty(1)">+</button>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Delivery Address</label>
+            <input type="text" id="f-address" placeholder="Street, Barangay, City">
+          </div>
+          <div class="form-group">
+            <label>Special Instructions</label>
+            <textarea id="f-notes" placeholder="Allergies, special messages, custom design requests…"></textarea>
+          </div>
+          <button type="submit" class="submit-btn">Confirm Order →</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact-section" id="contact">
+  <div class="container">
+    <div class="reveal">
+      <div class="tag">Find Us</div>
+      <h2>Get in Touch</h2>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-map reveal">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3925.8647891234567!2d123.58891234567!3d10.20421234567!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x33a98c9d1234567%3A0x1234567890abcdef!2sPalinpinon%2C%20Valencia%2C%20Negros%20Oriental!5e0!3m2!1sen!2sph!4v1700000000000"
+          allowfullscreen loading="lazy">
+        </iframe>
+      </div>
+      <div class="contact-details reveal">
+        <h3>Contact Details</h3>
+        <div class="contact-item">
+          <div class="contact-item-icon">📍</div>
+          <div>
+            <div class="contact-item-label">Location</div>
+            <div class="contact-item-value">Palinpinon, Valencia, Negros Oriental, Philippines<br><small style="color:var(--muted)">Exact address shared upon order confirmation</small></div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-item-icon">📞</div>
+          <div>
+            <div class="contact-item-label">Phone</div>
+            <div class="contact-item-value"><a href="tel:09970698135">09970698135</a></div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-item-icon">📧</div>
+          <div>
+            <div class="contact-item-label">Email</div>
+            <div class="contact-item-value"><a href="mailto:orders@nebulabakes.com">orders@nebulabakes.com</a></div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-item-icon">🕐</div>
+          <div>
+            <div class="contact-item-label">Hours</div>
+            <div class="contact-item-value">Mon – Saturday: 7 AM – 7 PM<br>Sunday: 8 AM – 3 PM</div>
+          </div>
+        </div>
+        <div class="social-row">
+          <a class="social-btn" href="https://www.facebook.com/jb.estologa" target="_blank" title="Facebook">📘</a>
+          <a class="social-btn" href="https://www.instagram.com/notjb_yes/" target="_blank" title="Instagram">📸</a>
+          <a class="social-btn" href="https://wa.me/63970698135" target="_blank" title="WhatsApp">💬</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <div>
+        <div class="logo-name" style="font-size:20px;font-family:'Cormorant Garamond',serif">✦ Nebula Bakes</div>
+        <div class="footer-copy" style="margin-top:6px">© 2025 Nebula Bakes. All rights reserved.</div>
+      </div>
+      <div class="footer-links">
+        <a href="#products">Menu</a>
+        <a href="#order">Order</a>
+        <a href="#contact">Contact</a>
+        <a href="#faq">FAQ</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+const MENU = [
+  {
+    id:1, category:'Signature Cakes', badge:'Best Seller', rating: 4.9,
+    name:'Galaxy Drip Cake',
+    desc:'Rich layered sponge with galaxy-swirl buttercream, edible gold drip, and shimmer dust. Perfect for celebrations.',
+    price:'₱1,450', img:'https://images.unsplash.com/photo-1535254973040-607b474cb50d?w=600&q=80'
+  },
+  {
+    id:2, category:'Pastries', badge:'', rating: 4.8,
+    name:'Stellar Croissants',
+    desc:'Laminated with 72 layers of pure butter. Light, airy, and golden-shelled — best enjoyed warm.',
+    price:'₱95 ea.', img:'https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=600&q=80'
+  },
+  {
+    id:3, category:'Breads', badge:'Daily Fresh', rating: 4.9,
+    name:'Aurora Sourdough',
+    desc:'Long-fermented 24-hour sourdough with a crackly crust and open crumb. Baked fresh every morning.',
+    price:'₱320', img:'https://images.unsplash.com/photo-1509440159596-0249088772ff?w=600&q=80'
+  },
+  {
+    id:4, category:'Desserts', badge:'', rating: 4.7,
+    name:'Nebula Tiramisu',
+    desc:'Italian-style tiramisu with espresso-soaked ladyfingers, mascarpone cream, and cocoa nebula dusting.',
+    price:'₱680', img:'https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?w=600&q=80'
+  },
+  {
+    id:5, category:'Signature Cakes', badge:'New', rating: 4.9,
+    name:'Cosmic Cheesecake',
+    desc:'Japanese-style burnt cheesecake with a galaxy mirror glaze top and blueberry compote filling.',
+    price:'₱980', img:'https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=600&q=80'
+  },
+  {
+    id:6, category:'Pastries', badge:'', rating: 4.8,
+    name:'Stardust Macarons',
+    desc:'French macarons in rotating cosmic flavors — salted caramel, lavender, matcha, and dark chocolate.',
+    price:'₱75 ea.', img:'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80'
+  },
+  {
+    id:7, category:'Breads', badge:'', rating: 4.8,
+    name:'Milky Way Focaccia',
+    desc:'Dimpled rosemary focaccia with olive oil, sea salt, and a topping mosaic that looks like a starfield.',
+    price:'₱280', img:'https://images.unsplash.com/photo-1586444248902-2f64eddc13df?w=600&q=80'
+  },
+  {
+    id:8, category:'Desserts', badge:'Fan Fave', rating: 4.9,
+    name:'Supernova Brownies',
+    desc:'Dense, fudgy dark chocolate brownies with a molten core and gold-flecked crinkle top.',
+    price:'₱220 (box of 4)', img:'https://images.unsplash.com/photo-1564355808539-22fda35bed7e?w=600&q=80'
+  }
+];
+
+let currentFilter = 'all';
+
+const REVIEWS = {};
+
+function getAverageRating(productId) {
+  const product = MENU.find(item => item.id === productId);
+  const reviews = REVIEWS[productId] || [];
+  if (!reviews.length) return product.rating.toFixed(1);
+  const total = reviews.reduce((sum, review) => sum + review.rating, 0);
+  return (total / reviews.length).toFixed(1);
+}
+
+function renderReviewList(productId) {
+  const list = document.getElementById(`review-list-${productId}`);
+  const reviews = REVIEWS[productId] || [];
+  if (!list) return;
+  if (!reviews.length) {
+    list.innerHTML = '<p class="review-empty">No reviews yet. Be the first to rate this item.</p>';
+    return;
+  }
+  list.innerHTML = reviews.map(review => `
+      <div class="review-item">
+        <div class="review-item-stars">${'★'.repeat(review.rating)}${'☆'.repeat(5 - review.rating)}</div>
+        <div class="review-item-comment">${review.comment}</div>
+      </div>
+    `).join('');
+}
+
+function renderProducts() {
+  const grid = document.getElementById('products-grid');
+  const sel = document.getElementById('f-product');
+  grid.innerHTML = '';
+
+  MENU.forEach((p, idx) => {
+    const card = document.createElement('div');
+    card.className = 'product-card reveal';
+    card.style.animationDelay = `${idx * 50}ms`;
+    card.innerHTML = `
+      <div class="product-img">
+        <img src="${p.img}" alt="${p.name}" loading="lazy">
+        ${p.badge ? `<span class="product-badge">${p.badge}</span>` : ''}
+        <div class="product-rating" id="product-rating-${p.id}">⭐ ${getAverageRating(p.id)}</div>
+      </div>
+      <div class="product-body">
+        <div class="product-category">${p.category}</div>
+        <div class="product-name">${p.name}</div>
+        <div class="product-desc">${p.desc}</div>
+        <div class="product-footer">
+          <div class="product-price">${p.price}</div>
+          <button class="btn-sm" onclick="quickOrder('${p.name}')">Order This</button>
+        </div>
+        <div class="review-section">
+          <button class="review-toggle" type="button" onclick="toggleReviewForm(${p.id})">Write a review</button>
+          <div class="review-form" id="review-form-${p.id}">
+            <div class="star-rating">
+              ${[5,4,3,2,1].map(star => `
+                <input type="radio" id="rating-${p.id}-${star}" name="rating-${p.id}" value="${star}">
+                <label for="rating-${p.id}-${star}">★</label>
+              `).join('')}
+            </div>
+            <textarea id="review-comment-${p.id}" placeholder="Tell us why you gave this rating..."></textarea>
+            <button class="btn-sm" type="button" onclick="submitReview(${p.id})">Submit review</button>
+          </div>
+          <div class="review-list" id="review-list-${p.id}">
+            <p class="review-empty">No reviews yet. Be the first to rate this item.</p>
+          </div>
+        </div>
+      </div>
+    `;
+    card.dataset.category = p.category;
+    card.id = `product-card-${p.id}`;
+    grid.appendChild(card);
+
+    const opt = document.createElement('option');
+    opt.value = p.id;
+    opt.textContent = `${p.name} — ${p.price}`;
+    sel.appendChild(opt);
+  });
+
+  observeAll();
+  MENU.forEach(p => renderReviewList(p.id));
+}
+
+function toggleReviewForm(productId) {
+  const form = document.getElementById(`review-form-${productId}`);
+  if (form) form.classList.toggle('open');
+}
+
+function submitReview(productId) {
+  const rating = document.querySelector(`input[name="rating-${productId}"]:checked`);
+  const commentEl = document.getElementById(`review-comment-${productId}`);
+  const comment = commentEl ? commentEl.value.trim() : '';
+  if (!rating || !comment) {
+    document.getElementById('toast-msg').textContent = 'Please choose a star rating and leave a quick comment.';
+    const toast = document.getElementById('toast');
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 4000);
+    return;
+  }
+
+  REVIEWS[productId] = REVIEWS[productId] || [];
+  REVIEWS[productId].unshift({ rating: Number(rating.value), comment });
+  commentEl.value = '';
+  document.querySelectorAll(`input[name="rating-${productId}"]`).forEach(i => i.checked = false);
+  renderReviewList(productId);
+  const ratingLabel = document.getElementById(`product-rating-${productId}`);
+  if (ratingLabel) ratingLabel.textContent = `⭐ ${getAverageRating(productId)}`;
+  const toast = document.getElementById('toast');
+  document.getElementById('toast-msg').textContent = 'Thanks! Your review has been added.';
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 5000);
+}
+
+function filterProducts(category) {
+  currentFilter = category;
+  const cards = document.querySelectorAll('.product-card');
+  const buttons = document.querySelectorAll('.filter-btn');
+
+  buttons.forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+
+  cards.forEach(card => {
+    if (category === 'all' || card.dataset.category === category) {
+      card.style.display = 'block';
+      card.style.animation = 'fadeInUp 0.5s ease';
+    } else {
+      card.style.display = 'none';
+    }
+  });
+}
+
+function quickOrder(name) {
+  const sel = document.getElementById('f-product');
+  for (let i = 0; i < sel.options.length; i++) {
+    if (sel.options[i].textContent.startsWith(name)) {
+      sel.selectedIndex = i;
+      break;
+    }
+  }
+  document.getElementById('order').scrollIntoView({ behavior: 'smooth' });
+}
+
+function changeQty(delta) {
+  const input = document.getElementById('f-qty');
+  input.value = Math.max(1, Math.min(99, parseInt(input.value || 1) + delta));
+}
+
+function toggleFAQ(element) {
+  element.classList.toggle('active');
+}
+
+function submitOrder(e) {
+  e.preventDefault();
+  const first = document.getElementById('f-first').value;
+  const product = document.getElementById('f-product');
+  const qty = document.getElementById('f-qty').value;
+  const productName = product.options[product.selectedIndex].text;
+
+  document.getElementById('toast-msg').textContent =
+    `${first}, we've received your order for ${qty}× ${productName.split('—')[0].trim()}.`;
+  const toast = document.getElementById('toast');
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 5000);
+
+  e.target.reset();
+  document.getElementById('f-qty').value = 1;
+}
+
+function subscribeNewsletter(e) {
+  e.preventDefault();
+  const email = e.target.querySelector('input[type="email"]').value;
+  document.getElementById('toast-msg').textContent =
+    `Thanks for subscribing! 🌟 Check your email for exclusive cosmic offers.`;
+  const toast = document.getElementById('toast');
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 5000);
+  e.target.reset();
+}
+
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+  });
+}, { threshold: 0.1 });
+
+function observeAll() {
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+}
+
+function toggleMenu() {
+  document.getElementById('site-header').classList.toggle('nav-open');
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  renderProducts();
+  setTimeout(() => observeAll(), 50);
+});
+
+document.querySelectorAll('nav a').forEach(a => {
+  a.addEventListener('click', () => document.getElementById('site-header').classList.remove('nav-open'));
+});
+</script>
+</body>
+</html>
