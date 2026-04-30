@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"><title>A COLLECTION OF WORK BY JB // Skills</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron&family=JetBrains+Mono&display=swap" rel="stylesheet">
+</head>
+<body class="fade-in">
+    <div class="cursor"></div><div class="scanlines"></div><canvas id="canvas-bg"></canvas>
+    <nav>
+        <div class="logo">A COLLECTION OF WORK BY JB</div>
+        <ul class="nav-links">
+            <li><a href="portfolio">HOME</a></li>
+            <li><a href="about.html">ABOUT</a></li>
+            <li><a href="skills.html" class="active">SKILLS</a></li>
+            <li><a href="gallery.html">GALLERY</a></li>
+            <li><a href="projects.html">PROJECTS</a></li>
+            <li><a href="contact.html">TERMINAL</a></li>
+            <li><a href="matchgame.html">ARCADE</a></li>
+             <li><a href="bakeery/index.html">BAKERY</a></li>
+        </ul>
+    </nav>
+    <div class="container">
+        <div class="glass-card" style="width: 100%; max-width: 600px;">
+            <h2 class="glitch" data-text="> CAPABILITIES" style="font-size: 2rem;">> CAPABILITIES</h2><br>
+            
+            <div class="skill-container">
+                <p>Adaptability[75%]</p>
+                <div class="skill-bar"><div class="skill-fill" data-width="75%"></div></div>
+            </div>
+            <div class="skill-container">
+                <p>Efficiency[65%]</p>
+                <div class="skill-bar"><div class="skill-fill" data-width="65%"></div></div>
+            </div>
+            <div class="skill-container">
+                <p>Transferability[55%]</p>
+                <div class="skill-bar"><div class="skill-fill" data-width="55%"></div></div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+    <script>
+        // Trigger skill bar animations on load
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.querySelectorAll('.skill-fill').forEach(bar => {
+                    bar.style.width = bar.getAttribute('data-width');
+                });
+            }, 500); // Slight delay for dramatic effect
+        });
+    </script>
+</body>
+</html>

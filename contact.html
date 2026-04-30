@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"><title>A COLLECTION OF WORK BY JB // Terminal</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron&family=JetBrains+Mono&display=swap" rel="stylesheet">
+</head>
+<body class="fade-in">
+    <div class="cursor"></div><div class="scanlines"></div><canvas id="canvas-bg"></canvas>
+    <nav>
+    <div class="logo">A COLLECTION OF WORK BY JB</div>
+        <ul class="nav-links">
+            <li><a href="portfolio">HOME</a></li>
+            <li><a href="about.html">ABOUT</a></li>
+            <li><a href="skills.html">SKILLS</a></li>
+            <li><a href="gallery.html">GALLERY</a></li>
+            <li><a href="projects.html">PROJECTS</a></li>
+            <li><a href="contact.html" class="active">TERMINAL</a></li>
+            <li><a href="matchgame.html">ARCADE</a></li>
+             <li><a href="bakeery/index.html">BAKERY</a></li>
+        </ul>
+    </nav>
+    <div class="container">
+        <div class="glass-card" style="width: 100%; max-width: 600px;">
+            <h2 class="glitch" data-text="> SECURE_MESSAGE" style="font-size: 2rem;">> SECURE_MESSAGE</h2><br>
+            <input type="text" id="subject-input" class="terminal-input" placeholder="SUBJECT">
+            <textarea id="message-input" class="terminal-input" placeholder="ENTER_MESSAGE_HERE" style="height: 150px; resize: none;"></textarea>
+            <button class="cyber-btn" id="send-btn">SEND_UPLINK</button>
+            
+            <div id="terminal-output"></div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+    <script>
+        // Interactive Fake Terminal Uplink
+        document.getElementById('send-btn').addEventListener('click', function() {
+            const output = document.getElementById('terminal-output');
+            const btn = document.getElementById('send-btn');
+            const subj = document.getElementById('subject-input').value;
+            const msg = document.getElementById('message-input').value;
+
+            if(subj === '' || msg === '') {
+                output.style.color = "red";
+                output.innerText = "ERROR: Missing Messages. Fill all fields.";
+                return;
+            }
+
+            btn.style.pointerEvents = 'none';
+            btn.style.opacity = '0.5';
+            output.style.color = "var(--neon-pink)";
+            
+            // Fake hacking/sending sequence
+            let messages = [
+                "Sending Message to jbestologa7@gmail.com...",
+                "Bypassing firewall [192.168.x.x]...",
+                "Establishing Message...",
+                "Message Succesfully Sent to Jb Estologa. Transmission complete."
+            ];
+            
+            let i = 0;
+            output.innerText = "";
+            let interval = setInterval(() => {
+                if(i < messages.length) {
+                    output.innerText += "\n> " + messages[i];
+                    i++;
+                } else {
+                    clearInterval(interval);
+                    document.getElementById('subject-input').value = '';
+                    document.getElementById('message-input').value = '';
+                    btn.style.pointerEvents = 'auto';
+                    btn.style.opacity = '1';
+                }
+            }, 800);
+        });
+    </script>
+</body>
+</html>

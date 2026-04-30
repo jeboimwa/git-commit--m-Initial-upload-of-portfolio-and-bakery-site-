@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SYS_CORE // SYNC_MODULE</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron&family=JetBrains+Mono&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0d0d0d;
+            --main-cyan: #00ffcc;
+            --darker-cyan: #00e6b8;
+            --pink-accent: #ff00ff;
+            --text-color: #fff;
+            --font-main: 'JetBrains Mono', monospace;
+            --font-heading: 'Orbitron', sans-serif;
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: var(--bg-color);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: var(--text-color);
+            font-family: var(--font-main);
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border: 2px solid var(--main-cyan);
+            box-shadow: 0 0 20px rgba(0, 243, 255, 0.4);
+            padding: 20px;
+            background: rgba(0, 20, 20, 0.8);
+            width: 500px;
+        }
+
+        h1 {
+            font-family: var(--font-heading);
+            color: var(--main-cyan);
+            font-size: 2rem;
+            margin-bottom: 10px;
+            text-shadow: 0 0 10px var(--main-cyan);
+        }
+
+        #status {
+            color: var(--pink-accent);
+            margin-bottom: 20px;
+            font-size: 1rem;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            width: 100%;
+        }
+
+        .card {
+            width: 100px;
+            height: 100px;
+            background: rgba(0, 20, 20, 0.9);
+            border: 1px solid var(--main-cyan);
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1rem;
+            color: transparent; /* initially hidden text */
+            transition: all 0.3s;
+            position: relative;
+            user-select: none;
+        }
+
+        .card:before {
+            content: '[SYS_NODE]';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: var(--main-cyan);
+            opacity: 0.5;
+            font-size: 0.8rem;
+        }
+
+        .card.flipped {
+            color: var(--text-color); /* show text */
+            background: rgba(0, 255, 204, 0.1);
+            border-color: var(--pink-accent);
+            text-shadow: 0 0 5px var(--pink-accent);
+        }
+
+        .card.flipped:before {
+            display: none;
+        }
+
+        .card.matched {
+            background: rgba(0, 255, 204, 0.05);
+            border-color: var(--darker-cyan);
+            color: var(--darker-cyan);
+            pointer-events: none; /* disable clicks on matched cards */
+            text-shadow: none;
+        }
+
+        #winMessage {
+            display: none;
+            color: var(--main-cyan);
+            margin-top: 20px;
+            font-size: 1.5rem;
+            font-family: var(--font-heading);
+            text-shadow: 0 0 10px var(--main-cyan);
+        }
+
+        /* Back button styling */
+        .back-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            color: rgba(255,255,255,0.5);
+            text-decoration: none;
+            font-size: 0.8rem;
+            padding: 5px 10px;
+            border: 1px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .back-btn:hover {
+            color: var(--main-cyan);
+            border: 1px solid var(--main-cyan);
+            box-shadow: 0 0 5px var(--main-cyan);
+        }
+
+    </style>
+</head>
+<body>
+
+    <a href="index.html" class="back-btn">[BACK_TO_SYS_CORE]</a>
+
+    <div class="container">
+        <h1>SYNC_MODULE_v1.0</h1>
+        <div id="status">FIND MATCHING NODE PAIRS // MOVES: 0 // MATCHES: 0</div>
+        
+        <div class="grid" id="grid">
+            </div>
+
+        <div id="winMessage">SYS_CORE_SYNC ESTABLISHED [SUCCESS]</div>
+    </div>
+
+    <script>
+        const symbols = [
+            '[CORE]', '[CORE]',
+            '(SYNC)', '(SYNC)',
+            '//NET', '//NET',
+            '\\UPLNK', '\\UPLNK',
+            '{DATA}', '{DATA}',
+            '<FUNC>', '<FUNC>',
+            '*KEY*', '*KEY*',
+            '!SYS_OK', '!SYS_OK'
+        ];
+
+        let cards = [];
+        let flippedCards = [];
+        let matches = 0;
+        let moves = 0;
+        let isProcessing = false; // Prevent multiple clicks during delay
+
+        const grid = document.getElementById('grid');
+        const status = document.getElementById('status');
+        const winMessage = document.getElementById('winMessage');
+
+        // Shuffle function (Fisher-Yates)
+        function shuffle(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        // Initialize board
+        function initBoard() {
+            shuffle(symbols);
+            grid.innerHTML = '';
+            cards = [];
+            flippedCards = [];
+            matches = 0;
+            moves = 0;
+            winMessage.style.display = 'none';
+            updateStatus();
+
+            symbols.forEach((symbol, index) => {
+                const card = document.createElement('div');
+                card.classList.add('card');
+                card.dataset.symbol = symbol;
+                card.dataset.index = index;
+                card.textContent = symbol;
+                card.addEventListener('click', flipCard);
+                grid.appendChild(card);
+                cards.push(card);
+            });
+        }
+
+        // Flip card logic
+        function flipCard() {
+            if (isProcessing || this.classList.contains('flipped') || this.classList.contains('matched') || flippedCards.length >= 2) return;
+
+            this.classList.add('flipped');
+            flippedCards.push(this);
+
+            if (flippedCards.length === 2) {
+                isProcessing = true;
+                moves++;
+                updateStatus();
+                checkMatch();
+            }
+        }
+
+        // Check for match
+        function checkMatch() {
+            const [card1, card2] = flippedCards;
+            if (card1.dataset.symbol === card2.dataset.symbol) {
+                // Match!
+                card1.classList.add('matched');
+                card2.classList.add('matched');
+                card1.classList.remove('flipped');
+                card2.classList.remove('flipped');
+                matches++;
+                updateStatus();
+                flippedCards = [];
+                isProcessing = false;
+                if (matches === symbols.length / 2) {
+                    winGame();
+                }
+            } else {
+                // No match, flip back after delay
+                setTimeout(() => {
+                    card1.classList.remove('flipped');
+                    card2.classList.remove('flipped');
+                    flippedCards = [];
+                    isProcessing = false;
+                }, 1000); // 1s delay
+            }
+        }
+
+        // Update status text
+        function updateStatus() {
+            status.textContent = `FIND MATCHING NODE PAIRS // MOVES: ${moves} // MATCHES: ${matches}`;
+        }
+
+        // Win game logic
+        function winGame() {
+            winMessage.style.display = 'block';
+            status.textContent = `CORE SYNC COMPLETE [MOVES: ${moves}]`;
+            // Add click to restart option? 
+            status.innerHTML += '<br><span onclick="initBoard()" style="cursor:pointer; color: var(--main-cyan);">CLICK HERE TO RE-SYNC</span>';
+        }
+
+        // Start initial game
+        initBoard();
+
+    </script>
+</body>
+</html>

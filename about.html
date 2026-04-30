@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"><title>A COLLECTION OF WORK BY JB // About</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron&family=JetBrains+Mono&display=swap" rel="stylesheet">
+    <style>
+        /* --- ADDED: Specific styling for the Profile Image --- */
+        .profile-image-container {
+            width: 180px; 
+            height: 180px; 
+            border: 2px solid var(--neon-blue); 
+            box-shadow: 0 0 15px rgba(0, 243, 255, 0.4);
+            overflow: hidden; /* Clips the scan effect */
+            position: relative; /* Needed for absolute overlays */
+            flex-shrink: 0; /* Prevents the image from getting squeezed */
+            animation: image-glitch 5s infinite; /* A slow, subtle flicker */
+        }
+
+        .profile-image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Keeps image aspect ratio correct */
+            filter: grayscale(100%) contrast(120%); /* Matches cyberpunk aesthetic */
+            opacity: 0.8;
+        }
+
+        /* The blue scanning line effect across the image */
+        .profile-image-container::after {
+            content: '';
+            position: absolute;
+            top: -100%;
+            left: 0;
+            width: 100%;
+            height: 10px;
+            background: rgba(0, 243, 255, 0.5);
+            box-shadow: 0 0 10px var(--neon-blue);
+            animation: image-scan 3s infinite linear;
+        }
+
+        /* Keyframes for the image animations */
+        @keyframes image-scan {
+            0% { top: -100%; }
+            100% { top: 100%; }
+        }
+        @keyframes image-glitch {
+            0% { opacity: 0.8; }
+            95% { opacity: 0.8; transform: scale(1); }
+            96% { opacity: 1; transform: scale(1.02) translateX(2px); }
+            97% { opacity: 0.8; transform: scale(1); }
+            100% { opacity: 0.8; }
+        }
+    </style>
+</head>
+<body class="fade-in">
+    <div class="cursor"></div><div class="scanlines"></div><canvas id="canvas-bg"></canvas>
+    <nav>
+        <div class="logo">A COLLECTION OF WORK BY JB</div>
+        <ul class="nav-links">
+            <li><a href="portfolio">HOME</a></li>
+            <li><a href="about.html" class="active">ABOUT</a></li>
+            <li><a href="skills.html">SKILLS</a></li>
+            <li><a href="gallery.html">GALLERY</a></li>
+            <li><a href="projects.html">PROJECTS</a></li>
+            <li><a href="contact.html">TERMINAL</a></li>
+            <li><a href="matchgame.html">ARCADE</a></li>
+             <li><a href="bakeery/index.html">BAKERY</a></li>
+        </ul>
+    </nav>
+    <div class="container">
+        <div class="glass-card" style="display: flex; gap: 40px; align-items: center; max-width: 900px; padding: 3rem;">
+            
+            <div class="profile-image-container">
+                <img src="images/me (4).jpg" alt="[IDENTITY_SCAN_UNAVAILABLE]">
+            </div>
+
+            <div>
+                <h2 class="glitch" data-text="> IDENTITY_SCAN" style="font-size: 2rem;">> IDENTITY_SCAN</h2><br>
+                <p class="typewriter">I am a student, studying in NEGROS ORIENTAL STATE UNIVERSITY(NORSU) who loves to learn and also an ordinary person who loves to play online games or scroll to social media. I am 18 Years Old and I live in palinpinon valencia negros oriental, I like to watch movies and anime.</p>
+            </div>
+        </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
