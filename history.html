@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VALENCIA // NEGROS_ORIENTAL_ARCHIVE</title>
+    <link rel="icon" type="image/png" href="favicon.png" />
+    <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=Outfit:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #030805;
+            --accent: #d4af37;
+            --glass: rgba(255, 255, 255, 0.05);
+            --text: #f0f4f0;
+            --border: rgba(212, 175, 55, 0.2);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            background: var(--bg); 
+            color: var(--text); 
+            font-family: 'Outfit', sans-serif; 
+            padding: 5% 5%;
+            line-height: 1.6;
+        }
+        .header {
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 25px;
+            margin-bottom: 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        h1 { font-family: 'Syncopate'; color: var(--accent); letter-spacing: 5px; font-size: 1.8rem; }
+        .back-btn {
+            color: var(--accent);
+            text-decoration: none;
+            font-family: 'Syncopate';
+            font-size: 0.7rem;
+            border: 1px solid var(--border);
+            padding: 12px 24px;
+            border-radius: 30px;
+            transition: 0.3s;
+        }
+        .back-btn:hover { background: rgba(212, 175, 55, 0.15); }
+        
+        .timeline {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        .entry {
+            background: var(--glass);
+            padding: 35px;
+            border: 1px solid var(--border);
+            border-left: 4px solid var(--accent);
+            border-radius: 0 15px 15px 0;
+            backdrop-filter: blur(5px);
+        }
+        .timeline-date {
+            font-family: 'Syncopate';
+            color: var(--accent);
+            font-size: 0.8rem;
+            display: block;
+            margin-bottom: 15px;
+            letter-spacing: 2px;
+        }
+        h2 { font-family: 'Syncopate'; font-size: 1.3rem; margin-bottom: 20px; text-transform: uppercase; }
+        p { color: #ccc; margin-bottom: 15px; }
+        strong { color: var(--accent); }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <a href="index.html" class="back-btn">← RETURN_TO_DASHBOARD</a>
+        <h1>LOCAL_HISTORY: VALENCIA_6215</h1>
+    </div>
+
+    <div class="timeline">
+        
+        <div class="entry">
+            <span class="timeline-date">PRE-1856 // THE ERA OF ERMITA</span>
+            <h2>The Mountain Sanctuary</h2>
+            <p>Originally, the town was known as <strong>Ermita</strong> ("Hermitage"). During the 19th century, coastal residents of Negros Oriental were under constant threat from <strong>Moro pirate raids</strong>. The lush, mist-covered mountains of Valencia provided the perfect high-altitude refuge where families could hide and defend themselves far from the shoreline.</p>
+        </div>
+
+        <div class="entry">
+            <span class="timeline-date">AUGUST 28, 1856 // SPANISH ESTABLISHMENT</span>
+            <h2>Nueva Valencia</h2>
+            <p>The town was formally organized by Spanish authorities in 1856. It was renamed <strong>Nueva Valencia</strong> by the first parish priest, <strong>Father Matias Villamayor</strong>. He named it after his hometown in Spain. The iconic <strong>sunken fountain</strong> in the town plaza—which you can still see today—was a gift imported directly from Spain during this era.</p>
+        </div>
+
+        <div class="entry">
+            <span class="timeline-date">1905 - 1948 // THE NAME CHANGE</span>
+            <h2>The Luzuriaga Interim</h2>
+            <p>In 1905, the town’s name was changed to <strong>Luzuriaga</strong> in honor of Don Carlos Ruiz de Luzuriaga, a prominent Negros legislator. While the name was official for over 40 years, the local people always felt a deep connection to their original identity. After years of petitioning, the name was finally restored to <strong>Valencia</strong> on October 11, 1948, via <strong>Republic Act No. 294</strong>.</p>
+        </div>
+
+        <div class="entry">
+            <span class="timeline-date">1942 - 1945 // WWII RESISTANCE</span>
+            <h2>Seat of the "Free Government"</h2>
+            <p>Valencia was the most vital strategic point in the province during WWII. It served as the headquarters for the <strong>Free Government of Negros Oriental</strong> under Governor G.Z. Villanueva. While the Japanese occupied Dumaguete, the resistance operated from the safety of Valencia’s rugged hills.</p>
+            <p>This history is preserved at the <strong>Cata-al World War II Museum</strong> in town, housing one of the most significant private collections of war relics in the Philippines.</p>
+        </div>
+
+        <div class="entry">
+            <span class="timeline-date">1983 - PRESENT // ENERGY & ENVIRONMENT</span>
+            <h2>The Geothermal Heart</h2>
+            <p>Today, Valencia is known as the <strong>"Little Baguio"</strong> of Negros due to its cool climate. It is home to the <strong>Palinpinon Geothermal Power Plant</strong>, which provides clean energy to the entire Visayas region. It has been repeatedly awarded as the <strong>"Cleanest and Greenest"</strong> town in the province, maintaining its legacy as a mountain paradise.</p>
+        </div>
+
+    </div>
+
+</body>
+</html>

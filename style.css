@@ -1,265 +1,51 @@
-:root {
-    --neon-blue: #00f3ff;
-    --neon-pink: #ff00ff;
-    --dark-bg: #030303;
-    --glass: rgba(255, 255, 255, 0.03);
-}
-
-* { margin: 0; padding: 0; box-sizing: border-box; cursor: none; }
-
-body {
-    background-color: var(--dark-bg);
-    color: var(--neon-blue);
-    font-family: 'JetBrains Mono', monospace;
-    overflow-x: hidden;
-}
-
-/* Animations */
-.fade-in {
-    animation: fadeInAnimation 1.5s ease-in;
-}
-@keyframes fadeInAnimation {
-    0% { opacity: 0; }
-    100% { opacity: 1; }
-}
-
-/* Loader Screen */
-#loader {
-    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background: #000; z-index: 9999;
-    display: flex; justify-content: center; align-items: center;
-    transition: opacity 0.5s ease;
-}
-
-/* Background & Overlays */
-#canvas-bg { position: fixed; top: 0; left: 0; z-index: -1; }
-.scanlines {
-    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%);
-    background-size: 100% 3px; pointer-events: none; z-index: 100;
-}
-
-/* Custom Cursor */
-.cursor {
-    width: 20px; height: 20px; border: 2px solid var(--neon-blue);
-    border-radius: 50%; position: fixed; pointer-events: none; z-index: 10000;
-    transition: transform 0.1s ease; box-shadow: 0 0 15px var(--neon-blue);
-    transform: translate(-50%, -50%); /* Centers cursor on mouse */
-}
-
-/* Navigation */
-nav {
-    display: flex; justify-content: space-between; padding: 1.5rem 5%;
-    border-bottom: 1px solid rgba(0, 243, 255, 0.3); background: rgba(0,0,0,0.9);
-}
-.logo { font-family: 'Orbitron'; font-weight: bold; letter-spacing: 2px;}
-.nav-links { display: flex; list-style: none; }
-.nav-links a {
-    color: var(--neon-blue); text-decoration: none; margin-left: 20px;
-    font-family: 'Orbitron'; font-size: 0.7rem; letter-spacing: 2px; transition: 0.3s;
-}
-.nav-links a:hover, .active { color: white; text-shadow: 0 0 10px var(--neon-blue); }
-
-/* Layouts */
-.container { padding: 4rem 10%; display: flex; flex-direction: column; align-items: center; min-height: 80vh; justify-content: center; }
-
-/* Advanced Glitch Effect */
-.glitch { 
-    font-family: 'Orbitron'; 
-    font-size: 3.5rem; 
-    position: relative;
-    color: white;
-    text-shadow: 2px 0 var(--neon-pink), -2px 0 var(--neon-blue); 
-    margin-bottom: 1rem; 
-}
-.glitch::before, .glitch::after {
-    content: attr(data-text);
-    position: absolute;
-    top: 0;
-    left: 0;
+/* --- CINEMATIC LANDSCAPE HEADER --- */
+.page-header { 
     width: 100%;
-    height: 100%;
-    background: var(--dark-bg);
-}
-.glitch::before {
-    left: 2px;
-    text-shadow: -1px 0 red;
-    animation: glitch-anim-1 2s infinite linear alternate-reverse;
-}
-.glitch::after {
-    left: -2px;
-    text-shadow: -1px 0 blue;
-    animation: glitch-anim-2 3s infinite linear alternate-reverse;
+    aspect-ratio: 16 / 9; /* This forces the wide "landscape" shape */
+    max-height: 80vh;     /* Prevents it from being too tall on huge screens */
+    position: relative; 
+    display: flex; 
+    align-items: flex-end; 
+    padding: 5%; 
+    overflow: hidden; 
+    background: #000;     /* Cinematic black bars if video hasn't loaded */
+    border-bottom: 1px solid var(--border); 
 }
 
-@keyframes glitch-anim-1 {
-    0% { clip-path: inset(20% 0 80% 0); }
-    20% { clip-path: inset(60% 0 10% 0); }
-    40% { clip-path: inset(40% 0 50% 0); }
-    60% { clip-path: inset(80% 0 5% 0); }
-    80% { clip-path: inset(10% 0 70% 0); }
-    100% { clip-path: inset(30% 0 20% 0); }
-}
-@keyframes glitch-anim-2 {
-    0% { clip-path: inset(10% 0 60% 0); }
-    20% { clip-path: inset(30% 0 20% 0); }
-    40% { clip-path: inset(70% 0 10% 0); }
-    60% { clip-path: inset(20% 0 50% 0); }
-    80% { clip-path: inset(50% 0 30% 0); }
-    100% { clip-path: inset(5% 0 80% 0); }
+.page-header video { 
+    position: absolute; 
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 100%; 
+    z-index: 1;           /* Moved up so it's definitely seen */
+    object-fit: cover;    /* Ensures no stretching */
+    opacity: 0; 
+    transition: opacity 1.5s ease;
 }
 
-/* Glass Cards */
-.glass-card {
-    background: var(--glass); backdrop-filter: blur(10px);
-    border: 1px solid rgba(0, 243, 255, 0.2); padding: 2rem;
-    border-radius: 5px; transition: 0.4s; text-align: left;
-}
-.glass-card:hover { border-color: var(--neon-blue); box-shadow: 0 0 20px rgba(0, 243, 255, 0.2); }
-
-/* Buttons */
-.cyber-btn {
-    border: 1px solid var(--neon-blue); padding: 12px 30px;
-    color: var(--neon-blue); text-decoration: none; font-family: 'Orbitron';
-    transition: 0.4s; display: inline-block; background: transparent;
-    text-transform: uppercase; letter-spacing: 2px;
-    position: relative; overflow: hidden;
-}
-.cyber-btn:hover { 
-    background: var(--neon-blue); 
-    color: black; 
-    box-shadow: 0 0 30px var(--neon-blue); 
-    font-weight: bold;
+/* Updated Gradient: Keeps the video clear, only fades the bottom 30% */
+.page-header::after { 
+    content: ''; 
+    position: absolute; 
+    inset: 0; 
+    background: linear-gradient(to bottom, transparent 70%, rgba(3, 8, 5, 1) 100%); 
+    z-index: 2; 
 }
 
-/* Gallery Grid (For your other pages) */
-.gallery-grid {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 20px; width: 100%; margin-top: 30px;
-}
-.gallery-item {
-    height: 200px; background: #111; overflow: hidden; border: 1px solid var(--neon-blue);
+.page-title { 
     position: relative;
-}
-.gallery-item img { width: 100%; height: 100%; object-fit: cover; opacity: 0.6; transition: 0.5s; }
-.gallery-item:hover img { opacity: 1; transform: scale(1.1); }
-
-/* Forms/Terminal (For your other pages) */
-.terminal-input {
-    background: transparent; border: none; border-left: 2px solid var(--neon-blue);
-    color: var(--neon-blue); padding: 10px; width: 100%; font-family: 'JetBrains Mono';
-    outline: none; margin-bottom: 20px;
-}/* --- NEW UPGRADES --- */
-
-/* Animated Skill Bars */
-.skill-container { margin-bottom: 1.5rem; }
-.skill-bar {
-    width: 100%; height: 10px; background: rgba(0, 243, 255, 0.1);
-    border: 1px solid var(--neon-blue); margin-top: 5px; border-radius: 5px;
-    overflow: hidden; position: relative;
-}
-.skill-fill {
-    height: 100%; background: var(--neon-blue); width: 0%; /* Starts at 0 for animation */
-    transition: width 1.5s cubic-bezier(0.22, 1, 0.36, 1);
-    box-shadow: 0 0 10px var(--neon-blue);
+    z-index: 10;          /* High z-index to sit on top of the wide video */
+    font-family: 'Syncopate'; 
+    font-size: clamp(2rem, 6vw, 4.5rem); 
+    color: var(--accent); 
+    letter-spacing: 5px;
+    text-shadow: 0 0 30px rgba(0,0,0,1);
 }
 
-/* Project Cards */
-.project-grid {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 20px; width: 100%;
-}
-.project-card {
-    border-left: 4px solid var(--neon-pink); cursor: none;
-    transition: all 0.3s ease; position: relative; overflow: hidden;
-}
-.project-card::before {
-    content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 0, 255, 0.2), transparent);
-    transition: 0.5s;
-}
-.project-card:hover { transform: translateY(-5px); border-left-color: var(--neon-blue); }
-.project-card:hover::before { left: 100%; }
-
-/* Terminal Output Text */
-#terminal-output {
-    margin-top: 20px; font-family: 'JetBrains Mono'; font-size: 0.9rem;
-    color: var(--neon-pink); text-shadow: 0 0 5px var(--neon-pink); min-height: 20px;
-}/* METADATA SIDEBAR STYLING */
-.metadata-sidebar {
-    position: fixed;
-    bottom: 20px;
-    left: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    border-left: 1px solid var(--neon-blue);
-    padding-left: 15px;
-    z-index: 500;
-    pointer-events: none; /* User can click through it */
-}
-
-.meta-group {
-    display: flex;
-    flex-direction: column;
-}
-
-.meta-label {
-    font-size: 0.55rem;
-    color: var(--neon-pink);
-    letter-spacing: 2px;
-    opacity: 0.8;
-}
-
-.meta-value {
-    font-size: 0.75rem;
-    color: var(--neon-blue);
-    font-family: 'JetBrains Mono', monospace;
-    text-shadow: 0 0 5px rgba(0, 243, 255, 0.5);
-}
-
-.meta-status {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 0.5rem;
-    margin-top: 10px;
-    letter-spacing: 1px;
-}
-
-.status-dot {
-    width: 6px;
-    height: 6px;
-    background-color: #39ff14; /* Matrix Green */
-    border-radius: 50%;
-    box-shadow: 0 0 8px #39ff14;
-    animation: pulse 2s infinite;
-}
-
-@keyframes pulse {
-    0% { opacity: 1; }
-    50% { opacity: 0.3; }
-    100% { opacity: 1; }
-}/* Social Widget Styling */
-.uplink-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 0.8rem;
-    margin-bottom: 12px;
-    font-family: 'JetBrains Mono', monospace;
-}
-
-.uplink-link {
-    color: var(--neon-blue);
-    text-decoration: none;
-    font-weight: bold;
-    transition: 0.3s;
-    letter-spacing: 1px;
-}
-
-.uplink-link:hover {
-    color: white;
-    text-shadow: 0 0 10px var(--neon-blue);
-    transform: translateX(5px);
-    display: inline-block;
+/* Failsafe for images */
+.card img, .gallery img {
+    background-color: #1a1a1a;
+    min-height: 100px;
+    display: block;
 }

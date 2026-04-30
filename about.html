@@ -1,86 +1,140 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8"><title>A COLLECTION OF WORK BY JB // About</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron&family=JetBrains+Mono&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VALENCIA // ABOUT_US</title>
+    <link rel="icon" type="image/jpeg" href="favicon.jpg">
+    <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=Outfit:wght@300;400;700&display=swap" rel="stylesheet">
     <style>
-        /* --- ADDED: Specific styling for the Profile Image --- */
-        .profile-image-container {
-            width: 180px; 
-            height: 180px; 
-            border: 2px solid var(--neon-blue); 
-            box-shadow: 0 0 15px rgba(0, 243, 255, 0.4);
-            overflow: hidden; /* Clips the scan effect */
-            position: relative; /* Needed for absolute overlays */
-            flex-shrink: 0; /* Prevents the image from getting squeezed */
-            animation: image-glitch 5s infinite; /* A slow, subtle flicker */
+        :root {
+            --bg: #030805;
+            --accent: #d4af37;
+            --glass: rgba(255, 255, 255, 0.05);
+            --text: #f0f4f0;
+            --border: rgba(212, 175, 55, 0.2);
         }
 
-        .profile-image-container img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover; /* Keeps image aspect ratio correct */
-            filter: grayscale(100%) contrast(120%); /* Matches cyberpunk aesthetic */
-            opacity: 0.8;
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Outfit', sans-serif;
+            margin: 0;
+            padding: 50px 10%;
         }
 
-        /* The blue scanning line effect across the image */
-        .profile-image-container::after {
-            content: '';
-            position: absolute;
-            top: -100%;
-            left: 0;
-            width: 100%;
-            height: 10px;
-            background: rgba(0, 243, 255, 0.5);
-            box-shadow: 0 0 10px var(--neon-blue);
-            animation: image-scan 3s infinite linear;
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 20px;
+            margin-bottom: 60px;
         }
 
-        /* Keyframes for the image animations */
-        @keyframes image-scan {
-            0% { top: -100%; }
-            100% { top: 100%; }
+        h1 { font-family: 'Syncopate'; color: var(--accent); letter-spacing: 5px; margin: 0; }
+
+        .back-btn {
+            color: var(--accent);
+            text-decoration: none;
+            font-family: 'Syncopate';
+            font-size: 0.7rem;
+            border: 1px solid var(--border);
+            padding: 10px 20px;
+            border-radius: 30px;
+            transition: 0.3s;
         }
-        @keyframes image-glitch {
-            0% { opacity: 0.8; }
-            95% { opacity: 0.8; transform: scale(1); }
-            96% { opacity: 1; transform: scale(1.02) translateX(2px); }
-            97% { opacity: 0.8; transform: scale(1); }
-            100% { opacity: 0.8; }
+
+        .back-btn:hover { background: var(--accent); color: #000; }
+
+        .team-container {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+
+        /* The Image + Description Row */
+        .member-card {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            background: var(--glass);
+            border: 1px solid var(--border);
+            padding: 30px;
+            border-radius: 20px;
+            transition: 0.4s;
+        }
+
+        .member-card:hover { border-color: var(--accent); transform: translateY(-5px); }
+
+        .member-image {
+            width: 250px;
+            height: 250px;
+            border-radius: 15px;
+            object-fit: cover;
+            border: 2px solid var(--accent);
+            flex-shrink: 0; /* Prevents image from squishing */
+        }
+
+        .member-info h2 {
+            font-family: 'Syncopate';
+            color: var(--accent);
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+        }
+
+        .member-info p {
+            line-height: 1.8;
+            color: #ccc;
+            font-size: 1.1rem;
+        }
+
+        @media (max-width: 768px) {
+            .member-card { flex-direction: column; text-align: center; }
+            .member-image { width: 100%; height: auto; }
         }
     </style>
 </head>
-<body class="fade-in">
-    <div class="cursor"></div><div class="scanlines"></div><canvas id="canvas-bg"></canvas>
-    <nav>
-        <div class="logo">A COLLECTION OF WORK BY JB</div>
-        <ul class="nav-links">
-            <li><a href="portfolio">HOME</a></li>
-            <li><a href="about.html" class="active">ABOUT</a></li>
-            <li><a href="skills.html">SKILLS</a></li>
-            <li><a href="gallery.html">GALLERY</a></li>
-            <li><a href="projects.html">PROJECTS</a></li>
-            <li><a href="contact.html">TERMINAL</a></li>
-            <li><a href="matchgame.html">ARCADE</a></li>
-             <li><a href="bakeery/index.html">BAKERY</a></li>
-        </ul>
-    </nav>
-    <div class="container">
-        <div class="glass-card" style="display: flex; gap: 40px; align-items: center; max-width: 900px; padding: 3rem;">
-            
-            <div class="profile-image-container">
-                <img src="images/me (4).jpg" alt="[IDENTITY_SCAN_UNAVAILABLE]">
-            </div>
+<body>
 
-            <div>
-                <h2 class="glitch" data-text="> IDENTITY_SCAN" style="font-size: 2rem;">> IDENTITY_SCAN</h2><br>
-                <p class="typewriter">I am a student, studying in NEGROS ORIENTAL STATE UNIVERSITY(NORSU) who loves to learn and also an ordinary person who loves to play online games or scroll to social media. I am 18 Years Old and I live in palinpinon valencia negros oriental, I like to watch movies and anime.</p>
+    <div class="header">
+        <h1>ABOUT_GROUP_5</h1>
+        <a href="index.html" class="back-btn">← RETURN_TO_SYSTEM</a>
+    </div>
+
+    <div class="team-container">
+        <div class="member-card">
+            <img src="about/sherwin.jpg" alt="Member 1" class="member-image">
+            <div class="member-info">
+                <h2>SHERWIN GADOR</h2>
+                <p>Responsible for the collection of digital assets and historical data regarding Valencia.</p>
             </div>
         </div>
+
+        <div class="member-card">
+            <img src="about/lea.jpg" alt="Member 2" class="member-image">
+            <div class="member-info">
+                <h2>LEO CHRIS VILLAROSA</h2>
+                <p>Responsible for the collection of images for the places in Valencia.</p>
+            </div>
+        </div>
+
+        <div class="member-card">
+            <img src="about/chakmamba.jpg" alt="Member 3" class="member-image">
+            <div class="member-info">
+                <h2>JHONMARL PORTADA</h2>
+                <p>Processes the environmental logs and stream metrics provided by the Valencia weather stations.</p>
+            </div>
+        </div>
+
+        <div class="member-card">
+            <img src="about/jb.jpg" alt="Member 4" class="member-image">
+            <div class="member-info">
+                <h2>ESTOLOGA ALBERTO</h2>
+                <p>Designed the visual language of the Valencia Data Stream. Focuses on making environmental data accessible.</p>
+            </div>
         </div>
     </div>
-    <script src="script.js"></script>
+
 </body>
 </html>

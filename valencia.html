@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VALENCIA // GROUP 5</title>
+
+    <link rel="icon" type="val/fav/favicon.jpg" href="fav/favicon.jpg">
+
+    <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=Outfit:wght@300;400;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
+</head>
+    <style>
+        :root {
+            --bg: #030805;
+            --accent: #d4af37;
+            --glass: rgba(255, 255, 255, 0.05);
+            --text: #f0f4f0;
+            --border: rgba(212, 175, 55, 0.2);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; cursor: none; }
+        body { background: var(--bg); color: var(--text); font-family: 'Outfit', sans-serif; overflow-x: hidden; }
+
+        #preloader {
+            position: fixed;
+            inset: 0;
+            background: #000;
+            z-index: 99999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+        .loader-text {
+            font-family: 'Syncopate';
+            font-size: 1.5rem;
+            color: var(--accent);
+            letter-spacing: 10px;
+        }
+        .loader-bar {
+            width: 0%;
+            height: 2px;
+            background: var(--accent);
+            margin-top: 20px;
+            transition: 0.1s;
+        }
+
+        #cursor {
+            width: 8px;
+            height: 8px;
+            background: var(--accent);
+            border-radius: 50%;
+            position: fixed;
+            z-index: 10000;
+            pointer-events: none;
+        }
+        #cursor-follower {
+            width: 40px;
+            height: 40px;
+            border: 1px solid var(--accent);
+            border-radius: 50%;
+            position: fixed;
+            z-index: 9999;
+            pointer-events: none;
+            transition: transform 0.15s, border-color 0.3s;
+        }
+
+        #progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: var(--accent);
+            width: 0%;
+            z-index: 1000;
+            box-shadow: 0 0 10px var(--accent);
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 25px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            background: linear-gradient(rgba(0,0,0,0.9), transparent);
+            backdrop-filter: blur(5px);
+        }
+        .logo {
+            font-family: 'Syncopate';
+            font-weight: 700;
+            font-size: 1.5rem;
+            letter-spacing: 2px;
+        }
+        .hud-controls {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+        .hud-btn {
+            background: var(--glass);
+            border: 1px solid var(--border);
+            padding: 10px 20px;
+            border-radius: 30px;
+            backdrop-filter: blur(10px);
+            font-size: 0.75rem;
+            transition: 0.3s;
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .hud-btn:hover {
+            background: rgba(212, 175, 55, 0.15);
+            border-color: var(--accent);
+            transform: translateY(-2px);
+        }
+
+        #main-view {
+            padding: 150px 5% 80px;
+            min-height: 100vh;
+            perspective: 1000px;
+        }
+        .hero {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+        .hero h1 {
+            font-family: 'Syncopate';
+            font-size: clamp(3rem, 6vw, 6rem);
+            text-transform: uppercase;
+            line-height: 1;
+        }
+
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+        }
+        .card {
+            position: relative;
+            height: 450px;
+            border-radius: 20px;
+            overflow: hidden;
+            transform-style: preserve-3d;
+            border: 1px solid rgba(255,255,255,0.1);
+            background: #0a0a0a;
+        }
+        .card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.5;
+            transition: 0.5s;
+            transform: translateZ(-50px) scale(1.1);
+            pointer-events: none;
+        }
+        .card:hover img { opacity: 0.9; }
+        .card-content {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            padding: 35px;
+            background: linear-gradient(transparent, rgba(0,0,0,0.95));
+            transform: translateZ(40px);
+            pointer-events: none;
+        }
+        .card-content h3 {
+            font-family: 'Syncopate';
+            font-size: 1.1rem;
+            color: var(--accent);
+            margin-bottom: 5px;
+        }
+
+        .virtual-page {
+            position: fixed;
+            inset: 0;
+            background: var(--bg);
+            z-index: 2000;
+            display: none;
+            overflow-y: auto;
+            opacity: 0;
+        }
+        .close-btn {
+            position: fixed;
+            top: 30px;
+            right: 5%;
+            z-index: 2100;
+            font-family: 'Syncopate';
+            background: #000;
+            color: var(--text);
+            border: 1px solid var(--accent);
+            padding: 12px 30px;
+            border-radius: 30px;
+            transition: 0.3s;
+        }
+        .close-btn:hover {
+            background: rgba(212, 175, 55, 0.15);
+        }
+
+        .page-header {
+            height: 65vh;
+            position: relative;
+            display: flex;
+            align-items: flex-end;
+            padding: 5%;
+            overflow: hidden;
+        }
+        .page-header video {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transition: 1s ease-in-out;
+            z-index: -1;
+        }
+        .page-header img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.3;
+            z-index: -2;
+        }
+        .page-title {
+            font-family: 'Syncopate';
+            font-size: 4rem;
+            color: var(--accent);
+            transform: translateZ(100px);
+            position: relative;
+            z-index: 1;
+        }
+
+        .page-body {
+            padding: 60px 5%;
+            display: flex;
+            flex-direction: column;
+            gap: 50px;
+        }
+
+        .page-desc {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: #bbb;
+            max-width: 850px;
+        }
+
+        .carousel {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.08);
+            background: #080808;
+        }
+
+        .carousel-track {
+            display: flex;
+            transition: transform 0.6s ease;
+            will-change: transform;
+            align-items: center;
+            background: #000;
+        }
+
+       .carousel-track img {
+    min-width: 100%;
+    width: 100%;
+    height: 80vh; /* Changed from 420px to take up 80% of the screen height */
+    object-fit: cover; /* Changed from contain to cover the whole area */
+    display: block;
+    background: #000;
+    pointer-events: none;
+
+        }
+
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            border: 1px solid var(--accent);
+            background: rgba(0,0,0,0.55);
+            color: var(--text);
+            font-size: 2rem;
+            line-height: 1;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.3s;
+            backdrop-filter: blur(10px);
+        }
+        .carousel-btn:hover {
+            background: var(--accent);
+            color: #000;
+        }
+        .carousel-btn.prev { left: 15px; }
+        .carousel-btn.next { right: 15px; }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .gallery img {
+            width: 100%;
+            height: 350px;
+            object-fit: cover;
+            border-radius: 15px;
+            border: 1px solid var(--glass);
+            transition: 0.4s;
+        }
+
+        footer {
+            background: #000;
+            border-top: 1px solid var(--border);
+            padding: 80px 5% 40px;
+            position: relative;
+            z-index: 10;
+            margin-top: 50px;
+        }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1.5fr;
+            gap: 50px;
+            margin-bottom: 60px;
+        }
+        .footer-col h4 {
+            font-family: 'Syncopate';
+            color: var(--accent);
+            font-size: 0.8rem;
+            margin-bottom: 25px;
+            letter-spacing: 2px;
+        }
+        .footer-col p {
+            color: #888;
+            line-height: 1.8;
+            font-size: 0.9rem;
+        }
+        .footer-links { list-style: none; }
+        .footer-links a {
+            color: #bbb;
+            text-decoration: none;
+            transition: 0.3s;
+            font-size: 0.9rem;
+            display: inline-block;
+            margin-bottom: 12px;
+        }
+        .footer-links a:hover {
+            color: var(--accent);
+            transform: translateX(5px);
+        }
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.05);
+            padding-top: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #555;
+            font-size: 0.7rem;
+            letter-spacing: 1px;
+        }
+
+        @media (max-width: 900px) {
+            .footer-grid { grid-template-columns: 1fr 1fr; }
+            .page-title { font-size: 2.5rem; }
+            .carousel-track img { height: 320px; }
+        }
+
+        @media (max-width: 700px) {
+            .hud-controls {
+                gap: 10px;
+                flex-wrap: wrap;
+                justify-content: flex-end;
+            }
+            .bento-grid {
+                grid-template-columns: 1fr;
+            }
+            .card {
+                height: 380px;
+            }
+            .carousel-btn {
+                width: 44px;
+                height: 44px;
+                font-size: 1.7rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="preloader">
+        <div class="loader-text">SYNCING SYSTEM</div>
+        <div id="loader-bar" class="loader-bar"></div>
+    </div>
+
+    <div id="progress-bar"></div>
+    <div id="cursor"></div>
+    <div id="cursor-follower"></div>
+
+ <nav>
+    <a href="history.html" class="logo" style="text-decoration: none; color: inherit;">VALENCIA</a>
+    <div class="hud-controls">
+        <div class="hud-btn" id="live-clock">SYS_TIME: 00:00:00</div>
+        <div class="hud-btn" id="ambience-btn" onclick="toggleAudio()" style="cursor: pointer;">🔇 AMBIENCE: OFF</div>
+        <div class="hud-btn" onclick="openWeather()" style="cursor: pointer;">⛅ CLIMATE STATUS</div>
+    </div>
+</nav>
+
+    <div id="main-view">
+        <div class="hero">
+            <h1>Wonders In Valencia</h1>
+            <p style="letter-spacing: 5px; color: #888; margin-top: 10px;">NEGROS ORIENTAL DATA STREAM</p>
+        </div><div style="display:flex; justify-content:center; margin: 20px 0 40px;">
+    <input
+        type="text"
+        id="searchInput"
+        placeholder="Search places..."
+        oninput="filterPlaces()"
+        style="
+            width: min(500px, 90%);
+            padding: 14px 18px;
+            border-radius: 30px;
+            border: 1px solid var(--border);
+            background: rgba(255,255,255,0.05);
+            color: var(--text);
+            outline: none;
+            font-family: 'Outfit', sans-serif;
+        "
+    />
+</div>
+        <div class="bento-grid" id="grid"></div>
+    </div>
+
+    <div id="detail-page" class="virtual-page">
+        <button class="close-btn" onclick="closePage()">TERMINATE VIEW</button>
+        <div class="page-header">
+            <video id="det-video" autoplay loop muted playsinline></video>
+            <img id="det-img" src="" alt="">
+            <h2 class="page-title" id="det-title">TITLE</h2>
+        </div>
+        <div class="page-body">
+            <div class="page-desc" id="det-desc"></div>
+
+            <div class="carousel">
+                <button class="carousel-btn prev" onclick="prevSlide()">‹</button>
+                <div class="carousel-track" id="carousel-track"></div>
+                <button class="carousel-btn next" onclick="nextSlide()">›</button>
+            </div>
+        </div>
+    </div>
+
+   <div id="weather-page" class="virtual-page">
+    <button class="close-btn" onclick="closePage()">RETURN</button>
+    
+    <div class="page-body" style="display: flex; flex-direction: column; gap: 30px; margin-top: 80px; user-select: none;">
+        
+        <div style="font-family: 'Syncopate'; color: var(--accent); letter-spacing: 2px; font-size: 0.9rem;">
+            APRIL 2026 • VALENCIA
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 25px;">
+            <div id="main-weather-icon" style="width: 70px; height: 70px; background: var(--accent); border-radius: 35%; box-shadow: 0 0 20px rgba(212, 175, 55, 0.3); transition: 0.3s;"></div>
+            <div style="display: flex; align-items: flex-start;">
+                <span id="active-temp" style="font-size: 5.5rem; font-family: 'Syncopate'; line-height: 1;">27</span>
+                <span style="font-size: 1.5rem; color: var(--accent); margin-top: 10px; font-family: 'Outfit';">°C</span>
+            </div>
+        </div>
+
+        <div id="active-status" style="font-family: 'Syncopate'; font-size: 1.8rem; letter-spacing: 2px;">SUNNY</div>
+
+        <div style="font-family: 'Syncopate'; color: var(--accent); font-size: 0.7rem; letter-spacing: 1px; margin-bottom: -15px;">SELECT DAY (SCROLL RIGHT →)</div>
+        
+        <div id="april-calendar" style="display: flex; gap: 12px; overflow-x: auto; padding: 15px 5px; cursor: grab; scroll-behavior: smooth; -webkit-overflow-scrolling: touch; border-bottom: 1px solid var(--border);">
+            </div>
+
+        <div style="display: flex; gap: 10px; font-family: 'Outfit';">
+            <button onclick="updateView('temp')" class="w-tab" style="background: var(--accent); color: #000; border: none; padding: 8px 20px; border-radius: 20px; cursor: pointer; font-weight: bold; font-family: 'Outfit';">TEMPERATURE</button>
+            <button onclick="updateView('precip')" class="w-tab" style="background: var(--glass); color: #888; border: 1px solid var(--border); padding: 8px 20px; border-radius: 20px; cursor: pointer; font-family: 'Outfit';">PRECIPITATION</button>
+        </div>
+
+        <div id="hourly-grid" style="display: flex; justify-content: space-between; background: var(--glass); padding: 25px; border-radius: 15px; border: 1px solid var(--border); font-family: 'Outfit';">
+           <audio id="bg-audio" loop>
+    <source src="audio/jungle-ambience.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+</audio> </div>
+    </div>
+
+    <script>
+ function toggleAudio() {
+    const audio = document.getElementById("bg-audio");
+    const btn = document.getElementById("ambience-btn");
+
+    if (audio.paused) {
+        audio.play();
+        btn.innerHTML = "🔊 AMBIENCE: ON";
+        btn.style.borderColor = "var(--accent)";
+    } else {
+        audio.pause();
+        btn.innerHTML = "🔇 AMBIENCE: OFF";
+        btn.style.borderColor = "var(--border)";
+    }
+}
+function toggleAudio() {
+    const audio = document.getElementById("bg-audio");
+    const btn = document.getElementById("ambience-btn");
+
+}
+        // Data generation
+        const aprilData = Array.from({ length: 30 }, (_, i) => ({
+            day: i + 1,
+            temp: Math.floor(Math.random() * (29 - 22) + 22),
+            status: Math.random() > 0.4 ? 'SUNNY' : 'CLOUDY',
+            precip: Math.floor(Math.random() * 30) + '%'
+        }));
+
+        const calendar = document.getElementById('april-calendar');
+        const hourly = document.getElementById('hourly-grid');
+
+        // Render 1-30
+        aprilData.forEach(data => {
+            const dayBox = document.createElement('div');
+            // flex-shrink: 0 ensures the boxes don't get squished
+            dayBox.style = `min-width: 75px; flex-shrink: 0; display: flex; flex-direction: column; align-items: center; gap: 10px; background: var(--glass); padding: 15px; border-radius: 12px; border: 1px solid var(--border); cursor: pointer; transition: 0.3s;`;
+            dayBox.innerHTML = `
+                <span style="font-size: 0.65rem; color: var(--accent); font-family: 'Syncopate';">APR ${data.day < 10 ? '0'+data.day : data.day}</span>
+                <div style="width: 18px; height: 18px; background: var(--accent); border-radius: 50%; box-shadow: 0 0 10px rgba(212, 175, 55, ${data.status === 'SUNNY' ? '0.4' : '0'});"></div>
+                <span style="font-weight: bold; font-size: 1.1rem; font-family: 'Outfit';">${data.temp}°</span>
+            `;
+            dayBox.onclick = () => selectDay(data, dayBox);
+            calendar.appendChild(dayBox);
+        });
+
+        function selectDay(data, element) {
+            document.getElementById('active-temp').innerText = data.temp;
+            document.getElementById('active-status').innerText = data.status;
+            
+            // Highlight
+            Array.from(calendar.children).forEach(child => {
+                child.style.borderColor = 'var(--border)';
+                child.style.background = 'var(--glass)';
+            });
+            element.style.borderColor = 'var(--accent)';
+            element.style.background = 'rgba(212, 175, 55, 0.15)';
+
+            updateHourly(data);
+        }
+
+        function updateHourly(data) {
+            hourly.innerHTML = `
+                <div style="text-align:center"><span style="color:#888; font-size:0.8rem;">9 AM</span><br><b style="font-family:'Syncopate'">${data.temp}°</b></div>
+                <div style="text-align:center"><span style="color:#888; font-size:0.8rem;">1 PM</span><br><b style="font-family:'Syncopate'">${data.temp + 2}°</b></div>
+                <div style="text-align:center"><span style="color:#888; font-size:0.8rem;">5 PM</span><br><b style="font-family:'Syncopate'">${data.temp - 1}°</b></div>
+                <div style="text-align:center"><span style="color:#888; font-size:0.8rem;">9 PM</span><br><b style="font-family:'Syncopate'">${data.temp - 3}°</b></div>
+            `;
+        }
+
+        function updateView(type) {
+            const tabs = document.querySelectorAll('.w-tab');
+            if(type === 'precip') {
+                document.getElementById('active-temp').innerText = '15%';
+                tabs[1].style.background = 'var(--accent)'; tabs[1].style.color = '#000';
+                tabs[0].style.background = 'var(--glass)'; tabs[0].style.color = '#888';
+            } else {
+                document.getElementById('active-temp').innerText = '27';
+                tabs[0].style.background = 'var(--accent)'; tabs[0].style.color = '#000';
+                tabs[1].style.background = 'var(--glass)'; tabs[1].style.color = '#888';
+            }
+        }function filterPlaces() {
+    const query = document.getElementById('searchInput').value.toLowerCase().trim();
+    const cards = document.querySelectorAll('#grid .card');
+
+    cards.forEach(card => {
+        const text = card.innerText.toLowerCase();
+        card.style.display = text.includes(query) ? '' : 'none';
+    });
+}
+
+        // Initialize first day
+        selectDay(aprilData[0], calendar.firstChild);
+    </script>
+</div>
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <div class="logo" style="margin-bottom: 20px; font-size: 1.2rem;">VALENCIA</div>
+                <p>The Omni Edition is a digital exploration project. We map the geothermal and ecological heart of Negros Oriental through high-fidelity visual documentation.</p>
+            </div>
+         <div class="footer-col">
+    <h4>CORE LINKS</h4>
+    <ul class="footer-links">
+        <li><a href="highlands.html">The Highlands</a></li>
+        <li><a href="weather.html">Weather Intel</a></li>
+        <li><a href="places.html">Explore Places</a></li>
+        <li><a href="safety.html">Safety Protocols</a></li>
+    </ul>
+</div>
+<div class="footer-col">
+    <h4>DATA STREAMS</h4>
+    <ul class="footer-links">
+       <li><a href="prep.html">Expedition Prep</a></li>
+        <li><a href="privacy.html">Privacy Policy</a></li>
+    </ul>
+</div>
+           <a href="about.html" style="text-decoration: none; color: inherit;">
+    <div class="footer-col" style="cursor: pointer; transition: 0.3s; padding: 10px; border-radius: 8px;" onmouseover="this.style.background='rgba(212, 175, 55, 0.1)'" onmouseout="this.style.background='transparent'">
+        <h4 style="color: var(--accent); font-family: 'Syncopate';">ABOUT US</h4>
+        <p>focused on the preservation and digital documentation of the Valencia watershed and its surrounding peaks.</p>
+    </div>
+</a>
+        </div>
+        <div class="footer-bottom">
+            <span>© 2026 VALENCIA // AUTH_VERIFIED</span>
+            <span>ENCRYPTED_CONNECTION // STATUS: OPTIMAL</span>
+        </div>
+    </footer>
+
+    <script>
+        const places = [
+            {
+                title: "Casaroro Falls",
+                desc: "DATA_LOG: A geological marvel of the Valencia watershed. Standing at approximately 100 feet, Casaroro is a single-column vertical plunge set within a narrow, cathedral-like canyon. The surrounding rock walls are perpetually slick with ancient moss and ferns, creating a localized micro-climate. Access requires navigating a steep 335-step concrete staircase, leading into a raw, high-velocity spray zone that generates significant negative ions and mountain mist.",
+                cover: "casaroro/casaroro5.jpg",
+                video: "vid/casaroro.mp4",
+                gallery: [
+                    "casaroro/casaroro.jpg",
+                    "casaroro/casaroro.jpg",
+                    "casaroro/casaroro1.jpg",
+                    "casaroro/casaroro2.jpg",
+                    "casaroro/casaroro3.jpg"
+                ]
+            },
+            {
+                title: "Pulangbato Falls",
+                desc: "GEOTHERMAL_SCAN: Named for its distinct 'Red Rocks,' this site is a visual manifestation of the region's volcanic chemistry. The stones are naturally stained a deep ochre by high concentrations of sulfur and iron deposits. The area features a unique 'twin falls' configuration where cool mountain water meets mineral-rich geothermal runoff. The surrounding Ocoy Valley is characterized by visible steam vents (fumaroles), signaling the massive geothermal energy stores moving beneath the riverbed.",
+                cover: "pulangbato/pulangbato.jpg",
+                video: "vid/pulangbatovid.mp4",
+                gallery: [
+                    "pulangbato/bato4.jpg",
+                    "pulangbato/bato5.png",
+                    "pulangbato/pulangbato.jpg",
+                    "pulangbato/bato2.jpg",
+                    "pulangbato/bato3.jpg"
+                ]
+            },
+            {
+                title: "Red Rock Hot Spring",
+                desc: "THERMAL_LOG: Located in the heart of the Valencia geothermal field, these springs serve as a natural thermal vent for the Cuernos de Negros volcano. The waters are naturally heated to temperatures ranging between 37°C and 40°C, enriched with therapeutic minerals. The pool structures utilize the local red basalt stone to retain heat. Observation of the area shows constant vapor clouds rising into the rainforest canopy, providing a crucial heat-exchange point for the local highland ecosystem.",
+                cover: "redrock/redrock-2.jpg",
+                video: "vid/redrock.mp4",
+                gallery: [
+                    "redrock/redrock-1.jpg",
+                    "redrock/redrock-2.jpg",
+                    "redrock/redrock1.jpg",
+                    "redrock/redrock2.jpg",
+                    "redrock/redrock4.jpg"
+                ]
+            },
+            {
+                title: "Forest Camp",
+                desc: "ECO_SYSTEM_REPORT: An engineered landscape designed for ecological harmony. This 2.5-hectare sanctuary utilizes a tiered stone-basin system to divert cold mountain spring water into swimmable lagoons. The canopy is dominated by native 'Balete' and 'Narra' trees, which regulate the ambient temperature to a constant 22-24°C. It serves as a primary bio-buffer between the developing town center and the protected wilderness of the Talinis range.",
+                cover: "forest/forestcamp1.jpg",
+                video: "vid/forestcamp.mp4",
+                gallery: [
+                    "forest/forestcamp4.jpg",
+                    "forest/forestcamp3.jpg",
+                    "forest/forestcamp2.jpg",
+                    "forest/forestcamp.jpg",
+                    "forest/forest (5).jpg"
+                ]
+            },
+            {
+                title: "Tierra Alta",
+                desc: "ELEVATION_DATA: Situated on the ridge overlooking the Dumaguete coastline, Tierra Alta represents the highest point of residential development in the Valencia plateau. Its signature lighthouse serves as a navigational landmark for the southern peninsula. The architecture is a study in Hellenistic influence, contrasting sharp white stone against the deep green mountain backdrop. From this vantage point, one can observe the atmospheric transition between the humid sea-level air and the cooler mountain currents.",
+                cover: "tierra alta/teira1.jpg",
+                video: "vid/teiraalta.mp4",
+                gallery: [
+                    "tierra alta/teira2.jpg",
+                    "tierra alta/teira3.jpg",
+                    "tierra alta/teira4.jpg",
+                    "tierra alta/teira5.jpg",
+                    "tierra alta/teira1.jpg"
+                ]
+            },
+            {
+                title: "Tejero Highland Park",
+                desc: "ADRENALINE_STREAM: A multi-use adventure facility integrated into the steep valley slopes of Valencia. Features high-velocity ziplines that traverse the river canyon and technical ATV trails that navigate through secondary growth rainforest. The park utilizes the natural terrain's gradient to provide different tiers of activity, while the bottom level houses large natural spring-fed pools that collect water filtered through the limestone layers of the upper mountains.",
+                cover: "tejero/tejero2.jpg",
+                video: "vid/tejero.mp4",
+                gallery: [
+                    "tejero/tejero2.jpg",
+                    "tejero/tejero.jpg",
+                    "tejero/tejero5.jpg",
+                    "tejero/tejero4.jpg",
+                    "tejero/tejero3.jpg"
+                ]
+            },
+            {
+                title: "Cata-al WWII Museum",
+                desc: "ARCHIVE_LOG: A private museum housing the region's most significant artifacts from the Second World War. Valencia was a critical strategic theater during the Japanese occupation and the subsequent liberation in 1945. The collection includes deactivated ordinance, imperial soldiers' personal diaries, and mechanical wreckage salvaged from the mountain jungles. It serves as a somber digital and physical record of the 'Battle of the Hills' that took place across the very ridges seen from the museum windows.",
+                cover: "ww2/WW2(1).jpg",
+                video: "vid/ww2.mp4",
+                gallery: [
+                    "ww2/WW2(2).jpg",
+                    "ww2/WW2(3).jpg",
+                    "ww2/WW2(4).jpg",
+                    "ww2/WW2(5).jpg",
+                    "ww2/WW2(7).jpg"
+                ]
+            },
+            {
+                title: "Japanese Shrine",
+                desc: "MEMORY_DATA: A monument of reconciliation and peace situated on the slopes of Mt. Talinis. This site marks the location where several Japanese soldiers and local guerrillas fell during the closing months of the war. It is now a quiet observation point characterized by minimalist stone architecture and cherry blossom-inspired landscaping. The shrine is oriented toward the sunrise, symbolizing a new dawn and the enduring silence of the mountains that witnessed the conflict.",
+                cover: "japanese shrine/japanese.jpg",
+                video: "vid/jpshrine.mp4",
+                gallery: [
+                    "japanese shrine/japaneseshrine (1).jpg",
+                    "japanese shrine/japaneseshrine (2).jpg",
+                    "japanese shrine/japaneseshrine (3).jpg",
+                    "japanese shrine/japaneseshrine (4).jpg",
+                    "japanese shrine/japaneseshrine.jpg"
+                ]
+            },
+            {
+                title: "Valencia Market",
+                desc: "COMMERCE_SCAN: The central hub of Valencias agricultural economy. Due to the rich volcanic soil and cool climate, the market specializes in highland produce such as organic cauliflower, broccoli, and the region’s famous sweet pineapples. It is a critical node in the local supply chain, where mountain farmers meet directly with coastal residents. The market represents the living heartbeat of the community, operating on a high-frequency cycle of trade and social interaction every Sunday.",
+                cover: "valenciamarket/sunday.jpg",
+                video: "vid/valenicaaaa.mp4",
+                gallery: [
+                    "valenciamarket/sunday3.jpg",
+                    "valenciamarket/sunday4.jpg",
+                    "valenciamarket/sunday2.jpg",
+                    "valenciamarket/sund.jpg",
+                    "valenciamarket/sunday1.jpg"
+                ]
+            },
+            {
+                title: "Mount Talinis",
+                desc: "APEX_REPORT: Known as 'Cuernos de Negros' or the Horns of Negros, this complex volcano stands at 1,903 meters above sea level. It is a massive biodiversity hotspot, home to several endemic species of birds and ancient mossy forests. The peak is characterized by double volcanic vents and a series of crater lakes, including Lake Balinsasayao. It serves as the primary watershed for Southern Negros, with its geothermal core providing electricity for the entire Visayas region through the Palinpinon Power Plant.",
+                cover: "mttalinis/mttalinis2.jpg",
+                video: "vid/mttalinis.mp4",
+                gallery: [
+                    "mttalinis/mtalinis (1).jpg",
+                    "mttalinis/mtalinis (2).jpg",
+                    "mttalinis/mttalinis.jpg",
+                    "mttalinis/mttalinis1.jpg",
+                    "mttalinis/mttalinis2.jpg"
+                ]
+            },
+            {
+    title: "The Barn at Mango Ranch",
+    desc: "ARCHIVE_LOG: A high-altitude estate situated in Brgy. Palinpinon. This facility is anchored by a landmark American-Western timber barn, serving as a primary hub for temperate-zone events. The sector has evolved into a 10-hectare adventure zone, integrating a sophisticated wave-pool system and equestrian trails. It occupies a strategic vantage point on the ridge, characterized by rapid mist formation and a significant drop in ambient temperature compared to the valley floor.",
+    cover: "thebarn/thebarn1.jpg",
+    video: "vid/ranch.mp4",
+    gallery: [
+        "thebarn/thebarn.jpg",
+        "thebarn/thebarn2.jpg",
+        "thebarn/thebarn3.jpg",
+        "thebarn/thebarn4.jpg",
+        "thebarn/thebarn6.jpg"
+    ]
+    },
+    {
+    title: "Mag-aso Sulfur Vents",
+    desc: "GEOTHERMAL_MONITOR: A high-activity fumarole field located along the arterial road to Pulangbato. These vents serve as a direct surface manifestation of the Mt. Talinis volcanic magmatic system. The site continuously emits superheated steam and sulfur dioxide (SO2) from deep crustal fissures. Atmospheric interaction often results in thick, low-lying vapor clouds, particularly during precipitation events. Note: Mineral-rich runoff has stained the surrounding rock formations with distinct ochre and yellow sulfur deposits.",
+    cover: "sulfur/sulfur2.jpg",
+    video: "vid/sulfur.mp4",
+    gallery: [
+        "sulfur/sulfur.jpg",
+        "sulfur/sulfur1.jpg",
+        "sulfur/sulfur3.jpg",
+        "sulfur/sulfur4.jpg",
+        "sulfur/sulfur5.jpg"
+    ]
+},
+            
+        ];
+
+        const grid = document.getElementById('grid');
+        places.forEach((p, i) => {
+            grid.innerHTML += `
+                <div class="card" onclick="openPlace(${i})">
+                    <img src="${p.cover}" alt="${p.title}">
+                    <div class="card-content">
+                        <h3>0${i + 1}. ${p.title}</h3>
+                        <p>LOAD_EXPEDITION_DATA</p>
+                    </div>
+                </div>
+            `;
+        });
+
+        function initTilt() {
+            document.querySelectorAll('.card').forEach(card => {
+                card.addEventListener('mousemove', e => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    const rx = ((y / rect.height) - 0.5) * -20;
+                    const ry = ((x / rect.width) - 0.5) * 20;
+                    gsap.to(card, { rotateX: rx, rotateY: ry, scale: 1.03, duration: 0.3 });
+                });
+                card.addEventListener('mouseleave', () => {
+                    gsap.to(card, { rotateX: 0, rotateY: 0, scale: 1, duration: 0.6, ease: "power2.out" });
+                });
+            });
+        }
+        initTilt();
+
+        document.addEventListener('mousemove', e => {
+            gsap.to('#cursor', { x: e.clientX - 4, y: e.clientY - 4, duration: 0 });
+            gsap.to('#cursor-follower', { x: e.clientX - 20, y: e.clientY - 20, duration: 0.15 });
+        });
+
+        document.querySelectorAll('a, button, .card, .hud-btn').forEach(el => {
+            el.addEventListener('mouseenter', () => gsap.to('#cursor-follower', { scale: 1.5, borderColor: '#fff' }));
+            el.addEventListener('mouseleave', () => gsap.to('#cursor-follower', { scale: 1, borderColor: 'var(--accent)' }));
+        });
+
+        let load = 0;
+        const int = setInterval(() => {
+            load += Math.floor(Math.random() * 20);
+            if (load >= 100) {
+                load = 100;
+                clearInterval(int);
+                gsap.to("#preloader", { y: '-100%', duration: 1, ease: "power4.inOut" });
+            }
+            document.getElementById('loader-bar').style.width = load + '%';
+        }, 80);
+
+        let currentSlide = 0;
+        let activePage = null;
+
+        function updateCarousel() {
+            const track = document.getElementById('carousel-track');
+            if (!track) return;
+            track.style.transform = `translateX(-${currentSlide * 100}%)`;
+        }
+
+        function nextSlide() {
+            const total = document.querySelectorAll('#carousel-track img').length;
+            if (!total) return;
+            currentSlide = (currentSlide + 1) % total;
+            updateCarousel();
+        }
+
+        function prevSlide() {
+            const total = document.querySelectorAll('#carousel-track img').length;
+            if (!total) return;
+            currentSlide = (currentSlide - 1 + total) % total;
+            updateCarousel();
+        }
+
+        function openPlace(index) {
+            const p = places[index];
+            const vid = document.getElementById('det-video');
+            const img = document.getElementById('det-img');
+            const track = document.getElementById('carousel-track');
+
+            document.getElementById('det-title').innerText = p.title;
+            document.getElementById('det-desc').innerText = p.desc;
+            img.src = p.cover;
+
+            vid.pause();
+            vid.removeAttribute('src');
+            vid.load();
+            gsap.set(vid, { opacity: 0 });
+
+            if (p.video && !p.video.includes("YOUR_VIDEO_URL_HERE")) {
+                vid.src = p.video;
+                vid.load();
+                vid.oncanplay = () => {
+                    vid.play().catch(() => {});
+                    gsap.to(vid, { opacity: 1, duration: 1.5 });
+                };
+            }
+
+            track.innerHTML = '';
+            p.gallery.forEach(src => {
+                track.innerHTML += `<img src="${src}" alt="${p.title} gallery image" loading="lazy">`;
+            });
+
+            currentSlide = 0;
+            updateCarousel();
+
+            animateIn('#detail-page');
+        }
+
+        function openWeather() {
+            animateIn('#weather-page');
+        }
+
+        function animateIn(id) {
+            const page = document.querySelector(id);
+            if (!page) return;
+
+            activePage = page;
+            page.style.display = 'block';
+            gsap.to('#main-view', { opacity: 0, scale: 0.95, duration: 0.5 });
+            gsap.fromTo(page, { y: '100%', opacity: 0 }, { y: '0%', opacity: 1, duration: 0.8, ease: "expo.out" });
+        }
+
+        function closePage() {
+            if (!activePage) return;
+
+            const vid = document.getElementById('det-video');
+            if (vid) vid.pause();
+
+            gsap.to(activePage, {
+                y: '100%',
+                opacity: 0,
+                duration: 0.5,
+                onComplete: () => {
+                    activePage.style.display = 'none';
+                    activePage = null;
+                }
+            });
+
+            gsap.to('#main-view', { opacity: 1, scale: 1, duration: 0.5, delay: 0.2 });
+        }
+
+        setInterval(() => {
+            document.getElementById('live-clock').innerText =
+                "SYS_TIME: " + new Date().toLocaleTimeString('en-US', { hour12: false });
+        }, 1000);
+
+        window.addEventListener('scroll', () => {
+            const scroll = window.scrollY;
+            const max = document.body.scrollHeight - window.innerHeight;
+            document.getElementById('progress-bar').style.width = (scroll / max) * 100 + '%';
+        });
+
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closePage();
+            if (activePage && activePage.id === 'detail-page') {
+                if (e.key === 'ArrowRight') nextSlide();
+                if (e.key === 'ArrowLeft') prevSlide();
+            }
+        });
+    </script>
+</body>
+</html>

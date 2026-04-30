@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Explore Valencia - Intel Map</title>
+    <style>
+        :root {
+            --gold: #f0c674;
+            --bg: #0d0d0d;
+            --card-bg: #1a1a1a;
+            --text: #e0e0e0;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            color: var(--gold);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            border-bottom: 2px solid var(--gold);
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+        }
+
+        .back-btn {
+            color: var(--gold);
+            text-decoration: none;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+
+        .search-shell {
+            display: grid;
+            gap: 12px;
+            margin-bottom: 28px;
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: #151515;
+            border: 1px solid #333;
+            border-radius: 14px;
+            padding: 14px 18px;
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2);
+        }
+
+        .search-bar:focus-within {
+            border-color: var(--gold);
+            box-shadow: 0 0 0 3px rgba(240, 198, 116, 0.12);
+        }
+
+        .search-icon {
+            color: var(--gold);
+            font-size: 1rem;
+        }
+
+        .search-input {
+            width: 100%;
+            border: 0;
+            outline: 0;
+            background: transparent;
+            color: var(--text);
+            font-size: 1rem;
+        }
+
+        .search-input::placeholder {
+            color: #777;
+        }
+
+        .search-meta {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            align-items: center;
+            color: #9a9a9a;
+            font-size: 0.9rem;
+        }
+
+        .places-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 20px;
+        }
+
+        .place-card {
+            background: var(--card-bg);
+            border: 1px solid #333;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: 0.3s;
+        }
+
+        .place-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--gold);
+        }
+
+        .place-content {
+            padding: 20px;
+        }
+
+        .place-content h3 {
+            margin: 0 0 10px 0;
+            color: var(--gold);
+        }
+
+        .place-content p {
+            font-size: 0.9rem;
+            line-height: 1.5;
+            color: #bbb;
+        }
+
+        .info-row {
+            margin-top: 15px;
+            font-size: 0.85rem;
+        }
+
+        .fee {
+            color: #81a1c1;
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .activity {
+            color: #a3be8c;
+            font-style: italic;
+        }
+
+        .tag {
+            background: #2a2a2a;
+            color: #888;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            margin-right: 5px;
+        }
+
+        .no-results {
+            display: none;
+            margin-top: 12px;
+            padding: 24px;
+            border: 1px dashed #444;
+            border-radius: 12px;
+            text-align: center;
+            color: #9a9a9a;
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        @media (max-width: 640px) {
+            body {
+                padding: 28px 16px;
+            }
+
+            .search-meta {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <a href="index.html" class="back-btn">&#8592; RETURN TO BASE</a>
+    <h1>Location Intelligence: Valencia</h1>
+
+    <div class="search-shell">
+        <label class="search-bar" for="place-search">
+            <span class="search-icon" aria-hidden="true">&#8981;</span>
+            <input
+                class="search-input"
+                id="place-search"
+                type="search"
+                placeholder="Search by place, category, activity, or fee..."
+                autocomplete="off"
+            >
+        </label>
+        <div class="search-meta">
+            <span id="results-count">Showing 12 destinations</span>
+            <span>Live filter across all destination cards</span>
+        </div>
+    </div>
+
+    <div class="places-grid">
+
+        <div class="place-card">
+            <div class="place-content">
+                <span class="tag">Nature</span>
+                <h3>Casaroro Falls</h3>
+                <p>The most iconic waterfall in the region. A massive single drop hidden in a deep, lush ravine.</p>
+                <div class="info-row">
+                    <span class="fee">Entrance: PHP 50</span>
+                    <span class="activity">Do: Hike 300+ steps, swimming, photography.</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="place-card">
+            <div class="place-content">
+                <span class="tag">Nature</span>
+                <h3>Pulangbato Falls</h3>
+                <p>Named for the natural red rocks. Features twin falls and clear, refreshing swimming basins.</p>
+                <div class="info-row">
+                    <span class="fee">Entrance: PHP 100</span>
+                    <span class="activity">Do: Swimming, family picnic, river trekking.</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="place-card">
+            <div class="place-content">
+                <span class="tag">Wellness</span>
+                <h3>Red Rock Hot Spring</h3>
+                <p>Natural thermal pools that are rich in minerals. Perfect for relaxing after a long hike.</p>
+                <div class="info-row">
+                    <span class="fee">Entrance: PHP 100</span>
+                    <span class="activity">Do: Therapeutic soaking, night swimming.</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="place-card">
+            <div class="place-content">
+                <span class="tag">Resort</span>
+                <h3>Forest Camp</h3>
+                <p>An eco-resort with multi-level natural pools, hammocks, and adventure activities.</p>
+                <div class="info-row">
+                    <span class="fee">Entrance: PHP 150 - PHP 200</span>
+                    <span class="activity">Do: Ziplining, wall climbing, pool hopping.</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="place-card">
+            <div class="place-content">
+                <span class="tag">Landmark</span>
+                <h3>Tierra Alta</h3>
+                <p>A Greek-inspired residential resort featuring a famous lighthouse and panoramic views.</p>
+                <div class="info-row">
+                    <span class="fee">Entrance: PHP 50 (Sightseeing)</span>
+                    <span class="activity">Do: Visit the lighthouse, sunset viewing.</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="place-card">
+            <div class="place-content">
+                <span class="tag">Adventure</span>
+                <h3>Tejero Highland Park</h3>
+                <p>A waterpark and adventure hub with slides and ATV tracks.</p>
+                <div class="info-row">
+                    <span class="fee">Entrance: PHP 100+</span>
+                    <span class="activity">Do: ATV riding, water slides, river viewing.</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="place-card">
+            <div class="place-content">
+                <span class="tag">History</span>
+                <h3>Cata-al WWII Museum</h3>
+                <p>A private collection of WWII relics, including uniforms and vehicles found in Valencia.</p>
+                <div class="info-row">
+                    <span class="fee">Entrance: Donation / Small Fee</span>
+                    <span class="activity">Do: History tour, artifact study.</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="place-card">
+            <div class="place-content">
+                <span class="tag">History</span>
+                <h3>Japanese Shrine</h3>
+                <p>A monument located at the foothills of Mt. Talinis, marking a WWII battle site.</p>
+                <div class="info-row">
+                    <span class="fee">Entrance: Free</span>
+                    <span class="activity">Do: Short hike, mountain viewing.</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="place-card">
+            <div class="place-content">
+                <span class="tag">Local</span>
+                <h3>Valencia Market</h3>
+                <p>Famous for its Sunday market and the best "Budbud" (sticky rice) in Negros.</p>
+                <div class="info-row">
+                    <span class="fee">Entrance: Free</span>
+                    <span class="activity">Do: Food tripping, buying local crafts.</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="place-card">
+            <div class="place-content">
+                <span class="tag">Trekking</span>
+                <h3>Mount Talinis</h3>
+                <p>Known as "Cuernos de Negros." The second highest peak in Negros Oriental.</p>
+                <div class="info-row">
+                    <span class="fee">Permit: PHP 100 (Guide required)</span>
+                    <span class="activity">Do: Multi-day hiking, camping.</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="place-card">
+            <div class="place-content">
+                <span class="tag">Dining</span>
+                <h3>The Barn at Mango Ranch</h3>
+                <p>A rustic, cozy cafe and restaurant known for its aesthetic interiors.</p>
+                <div class="info-row">
+                    <span class="fee">Entrance: None (Pay for food)</span>
+                    <span class="activity">Do: Brunch, photography, coffee.</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="place-card">
+            <div class="place-content">
+                <span class="tag">Geological</span>
+                <h3>Mag-aso Sulfur Vents</h3>
+                <p>Active volcanic steam vents showcasing the geothermal power of the region.</p>
+                <div class="info-row">
+                    <span class="fee">Entrance: Free / Small Fee</span>
+                    <span class="activity">Do: Sightseeing, witnessing geothermal activity.</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="no-results" id="no-results">
+        No matching destinations found. Try another keyword like falls, history, or market.
+    </div>
+</div>
+
+<script>
+    const searchInput = document.getElementById('place-search');
+    const cards = Array.from(document.querySelectorAll('.place-card'));
+    const resultsCount = document.getElementById('results-count');
+    const noResults = document.getElementById('no-results');
+    const totalCards = cards.length;
+
+    function updateSearchResults() {
+        const query = searchInput.value.trim().toLowerCase();
+        let visibleCount = 0;
+
+        cards.forEach((card) => {
+            const text = card.textContent.toLowerCase();
+            const matches = !query || text.includes(query);
+            card.style.display = matches ? '' : 'none';
+
+            if (matches) {
+                visibleCount += 1;
+            }
+        });
+
+        resultsCount.textContent = query
+            ? `Showing ${visibleCount} of ${totalCards} destinations`
+            : `Showing ${totalCards} destinations`;
+
+        noResults.style.display = visibleCount === 0 ? 'block' : 'none';
+    }
+
+    searchInput.addEventListener('input', updateSearchResults);
+</script>
+
+</body>
+</html>

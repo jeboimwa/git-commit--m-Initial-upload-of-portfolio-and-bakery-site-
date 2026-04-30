@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Safety Protocols - Valencia Expedition Force</title>
+    <style>
+        :root {
+            --danger: #ff4444;
+            --warning: #f0c674;
+            --info: #81a1c1;
+            --bg: #050505;
+            --panel: #111;
+            --gold: #f0c674;
+        }
+
+        body { 
+            background: var(--bg); 
+            color: #bbb; 
+            font-family: 'Courier New', Courier, monospace; 
+            padding: 20px; 
+            line-height: 1.5;
+        }
+
+        .container { max-width: 1000px; margin: 0 auto; border: 1px solid #222; padding: 20px; }
+
+        .header { 
+            background: var(--danger); 
+            color: black;
+            padding: 15px; 
+            margin-bottom: 30px; 
+            text-align: center;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        h1 { margin: 0; letter-spacing: 3px; font-size: 1.5rem; }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .sector { 
+            background: var(--panel); 
+            border: 1px solid #333; 
+            padding: 15px; 
+            border-top: 4px solid var(--gold);
+        }
+
+        .sector h3 { 
+            color: var(--gold); 
+            margin-top: 0; 
+            font-size: 1rem;
+            border-bottom: 1px solid #222;
+            padding-bottom: 5px;
+        }
+
+        .risk-lvl { 
+            font-size: 0.7rem; 
+            font-weight: bold; 
+            padding: 2px 6px; 
+            border-radius: 3px; 
+            float: right;
+            text-transform: uppercase;
+        }
+
+        .high { background: var(--danger); color: white; }
+        .med { background: var(--warning); color: black; }
+        .low { background: var(--info); color: white; }
+
+        ul { list-style: none; padding: 0; font-size: 0.85rem; }
+        li { margin-bottom: 8px; border-bottom: 1px solid #1a1a1a; padding-bottom: 4px; }
+        li::before { content: "[!] "; color: var(--gold); }
+
+        .back-btn { 
+            display: inline-block; 
+            margin-bottom: 20px; 
+            color: var(--gold); 
+            text-decoration: none; 
+            font-weight: bold; 
+        }
+
+        footer { text-align: center; margin-top: 40px; color: #444; font-size: 0.7rem; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <a href="index.html" class="back-btn"><< RETURN TO PLACES</a>
+    
+    <div class="header">
+        <h1>Critical Safety Directives - All Sectors</h1>
+    </div>
+
+    <div class="grid">
+
+        <div class="sector">
+            <span class="risk-lvl high">CRITICAL</span>
+            <h3>01. Casaroro Falls</h3>
+            <ul>
+                <li><strong>Staircase Integrity:</strong> 350+ steps. Descend slowly; moisture makes steel treads extremely slick.</li>
+                <li><strong>Flash Flood Zone:</strong> The ravine is narrow. If water turns muddy, evacuate the canyon floor immediately.</li>
+                <li><strong>Hydraulic Force:</strong> Avoid the splash zone. The downward wind can cause disorientation.</li>
+            </ul>
+        </div>
+
+        <div class="sector">
+            <span class="risk-lvl med">MODERATE</span>
+            <h3>02. Pulangbato Falls</h3>
+            <ul>
+                <li><strong>Mineral Staining:</strong> High sulfur/iron content. Do not wear white; water will cause permanent orange stains.</li>
+                <li><strong>Basin Depth:</strong> Variable depths in the red pools. Check depth with a stick before jumping.</li>
+                <li><strong>Rock Grip:</strong> The red rocks are smoother than standard basalt; move with care.</li>
+            </ul>
+        </div>
+
+        <div class="sector">
+            <span class="risk-lvl low">LOW</span>
+            <h3>03. Red Rock Hot Spring</h3>
+            <ul>
+                <li><strong>Thermal Shock:</strong> Water is 38°C+. Limit soak time to 20 mins to prevent dizziness.</li>
+                <li><strong>Hydration:</strong> Drink 500ml of water for every 30 mins of soaking to avoid dehydration.</li>
+                <li><strong>Slippery Tiles:</strong> The moss around the thermal pipes is high-risk for falls.</li>
+            </ul>
+        </div>
+
+        <div class="sector">
+            <span class="risk-lvl med">MODERATE</span>
+            <h3>04. Forest Camp</h3>
+            <ul>
+                <li><strong>Child Safety:</strong> Multiple pool levels. Constant supervision is required for non-swimmers.</li>
+                <li><strong>Hanging Bridges:</strong> Max capacity is 3 personnel. Do not sway or jump on the suspension lines.</li>
+                <li><strong>Adventure Gear:</strong> Harnesses for ziplining must be double-checked by camp staff.</li>
+            </ul>
+        </div>
+
+        <div class="sector">
+            <span class="risk-lvl low">LOW</span>
+            <h3>05. Tierra Alta</h3>
+            <ul>
+                <li><strong>Wind Shear:</strong> Lighthouse deck is exposed. Secure hats and light equipment against high gusts.</li>
+                <li><strong>Sun Exposure:</strong> The white Greek architecture reflects UV rays. High-SPF sunscreen required.</li>
+                <li><strong>Stair Safety:</strong> Lighthouse spiral stairs are narrow; yield to ascending personnel.</li>
+            </ul>
+        </div>
+
+        <div class="sector">
+            <span class="risk-lvl med">MODERATE</span>
+            <h3>06. Tejero Highland Park</h3>
+            <ul>
+                <li><strong>ATV Ops:</strong> Helmets and closed shoes are non-negotiable. Maintain 10m spacing on trails.</li>
+                <li><strong>Water Slides:</strong> Follow "Arms Crossed" protocol to prevent spinal or limb impact.</li>
+                <li><strong>River Flow:</strong> River currents can increase after rain; check safety flags before entry.</li>
+            </ul>
+        </div>
+
+        <div class="sector">
+            <span class="risk-lvl low">LOW</span>
+            <h3>07. Cata-al WWII Museum</h3>
+            <ul>
+                <li><strong>UXO Safety:</strong> Some artifacts are unexploded ordnance (inert). Do not shake or drop heavy metal relics.</li>
+                <li><strong>Rust/Tetanus:</strong> Relics are aged iron. Avoid contact with skin if you have open wounds.</li>
+                <li><strong>Fragile Intel:</strong> Do not use flash photography on paper documents or uniforms.</li>
+            </ul>
+        </div>
+
+        <div class="sector">
+            <span class="risk-lvl med">MODERATE</span>
+            <h3>08. Japanese Shrine</h3>
+            <ul>
+                <li><strong>Altitude Prep:</strong> High elevation means thinner air. Pace your ascent to avoid "mountain sickness."</li>
+                <li><strong>Isolated Area:</strong> No cellular signal. Carry a whistle or signaling device for emergencies.</li>
+                <li><strong>Trail Debris:</strong> Heavy leaf litter hides loose rocks. Watch your footing.</li>
+            </ul>
+        </div>
+
+        <div class="sector">
+            <span class="risk-lvl med">MODERATE</span>
+            <h3>09. Valencia Market</h3>
+            <ul>
+                <li><strong>Traffic Intel:</strong> Habal-habals move fast. Stand 1m back from the main road.</li>
+                <li><strong>Security:</strong> Keep wallets/comms in front pockets. Sunday crowds increase pickpocket risk.</li>
+                <li><strong>Food Hygiene:</strong> Only consume fully cooked "Budbud." Avoid tap water in the market zone.</li>
+            </ul>
+        </div>
+
+        <div class="sector">
+            <span class="risk-lvl high">CRITICAL</span>
+            <h3>10. Mount Talinis</h3>
+            <ul>
+                <li><strong>Guide Mandatory:</strong> Do not attempt Apolong or Bediao trails without a licensed guide.</li>
+                <li><strong>Hypothermia:</strong> Temps drop to 14°C at Lake Nailig. Thermal blankets are mandatory.</li>
+                <li><strong>Limatik (Leeches):</strong> Use alcohol spray or leech socks in the "Green Gate" jungle sections.</li>
+            </ul>
+        </div>
+
+        <div class="sector">
+            <span class="risk-lvl low">LOW</span>
+            <h3>11. The Barn</h3>
+            <ul>
+                <li><strong>Fire Hazard:</strong> Rustic wood structure. Strictly no smoking near the main barn walls.</li>
+                <li><strong>Floor Levels:</strong> Steps are uneven to maintain aesthetic. Watch for trip hazards in low light.</li>
+                <li><strong>Insect Alert:</strong> Open-air dining. Apply repellent during "mosquito hour" (sunset).</li>
+            </ul>
+        </div>
+
+        <div class="sector">
+            <span class="risk-lvl high">CRITICAL</span>
+            <h3>12. Mag-aso Sulfur Vents</h3>
+            <ul>
+                <li><strong>Gas Inhalation:</strong> Hydrogen Sulfide ($H_{2}S$) is present. If you smell rotten eggs, move upwind.</li>
+                <li><strong>Ground Heat:</strong> Steam vents can hit 100°C. Do not touch wet ground near active vents.</li>
+                <li><strong>Respiratory:</strong> Personnel with asthma must carry inhalers or avoid the direct vent zone.</li>
+            </ul>
+        </div>
+
+    </div>
+
+    <footer>
+        [ END OF DOCUMENT ] - PROCEED WITH EXTREME CAUTION AT ALL SITES.
+    </footer>
+</div>
+
+</body>
+</html>

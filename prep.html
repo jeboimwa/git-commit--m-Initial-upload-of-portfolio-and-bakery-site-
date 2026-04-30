@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expedition Prep - Master Deployment Intel</title>
+    <style>
+        :root {
+            --gold: #f0c674;
+            --bg: #050505;
+            --panel: #111;
+            --danger: #ff4444;
+            --safe: #a3be8c;
+            --text: #aaa;
+        }
+
+        body { 
+            background: var(--bg); 
+            color: var(--text); 
+            font-family: 'Segoe UI', sans-serif; 
+            margin: 0; 
+            padding: 40px 20px;
+            line-height: 1.8;
+        }
+
+        .container { max-width: 1100px; margin: 0 auto; }
+
+        .header-box {
+            border: 1px solid var(--gold);
+            padding: 30px;
+            margin-bottom: 40px;
+            background: linear-gradient(45deg, #111, #050505);
+        }
+
+        h1 { 
+            color: var(--gold); 
+            text-transform: uppercase; 
+            letter-spacing: 8px; 
+            margin: 0;
+            font-size: 2.5rem;
+        }
+
+        .status-bar {
+            display: flex;
+            gap: 20px;
+            font-family: monospace;
+            font-size: 0.8rem;
+            color: #555;
+            margin-top: 10px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+        }
+
+        .card {
+            background: var(--panel);
+            border: 1px solid #222;
+            padding: 25px;
+            border-top: 3px solid var(--gold);
+        }
+
+        h2 { 
+            color: var(--gold); 
+            font-size: 1.2rem; 
+            text-transform: uppercase; 
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        h2::before {
+            content: "INTEL_";
+            font-size: 0.7rem;
+            opacity: 0.5;
+            margin-right: 5px;
+        }
+
+        .detail-list { list-style: none; padding: 0; }
+        .detail-list li { 
+            margin-bottom: 15px; 
+            padding-bottom: 10px; 
+            border-bottom: 1px solid #222;
+        }
+
+        .label { color: #eee; font-weight: bold; display: block; font-size: 0.95rem; }
+        .desc { font-size: 0.85rem; color: #888; display: block; margin-top: 3px; }
+        .price { color: var(--safe); font-family: monospace; font-weight: bold; }
+
+        .checkpoint {
+            background: #1a1a1a;
+            border: 1px dashed var(--gold);
+            padding: 20px;
+            margin-top: 30px;
+        }
+
+        .btn-back {
+            color: var(--gold);
+            text-decoration: none;
+            font-family: monospace;
+            border: 1px solid var(--gold);
+            padding: 5px 15px;
+            transition: 0.3s;
+        }
+
+        .btn-back:hover { background: var(--gold); color: black; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <a href="index.html" class="btn-back">< RETURN TO BASE</a>
+    
+    <div class="header-box">
+        <h1>EXPEDITION PREP</h1>
+        <div class="status-bar">
+            <span>[ LOCATION: 9.28°N 123.24°E ]</span>
+            <span>[ SYSTEM: ACTIVE ]</span>
+            <span>[ AUTH: LEVEL_ALPHA ]</span>
+        </div>
+    </div>
+
+    <div class="grid">
+        <div class="card">
+            <h2>Transport Logistics</h2>
+            <ul class="detail-list">
+                <li>
+                    <span class="label">Public Jeepney (Dumaguete Terminal)</span>
+                    <span class="desc">Located near the Public Market/Fruit Stands. Direct to Valencia Plaza.</span>
+                    <span class="price">₱20.00 / seat</span>
+                </li>
+                <li>
+                    <span class="label">Habal-Habal (Motorcycle Taxi)</span>
+                    <span class="desc">The fastest way to reach Casaroro or Pulangbato. Negotiate before boarding.</span>
+                    <span class="price">₱50.00 - ₱150.00 per trip</span>
+                </li>
+                <li>
+                    <span class="label">Full Day Extraction (Private)</span>
+                    <span class="desc">Hire a driver for 8 hours to visit all 12 locations in your own sequence.</span>
+                    <span class="price">₱800.00 - ₱1,200.00</span>
+                </li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h2>Mission Fuel (Food)</h2>
+            <ul class="detail-list">
+                <li>
+                    <span class="label">Valencia Budbud (Sticky Rice)</span>
+                    <span class="desc">The primary high-carb fuel for hikers. Best bought at the Sunday Market.</span>
+                    <span class="price">₱15.00 - ₱25.00</span>
+                </li>
+                <li>
+                    <span class="label">Sikwate (Hot Chocolate)</span>
+                    <span class="desc">Local cacao drink. Highly recommended for cold mornings at the Japanese Shrine.</span>
+                    <span class="price">₱30.00 / cup</span>
+                </li>
+                <li>
+                    <span class="label">Standard Highland Meal</span>
+                    <span class="desc">Roasted chicken or "Lantaw" style dining at local eateries.</span>
+                    <span class="price">₱150.00 - ₱300.00</span>
+                </li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h2>Required Loadout</h2>
+            <ul class="detail-list">
+                <li>
+                    <span class="label">Primary Footwear</span>
+                    <span class="desc">Closed-toe sandals with aggressive tread. Basalt rocks are incredibly slick.</span>
+                </li>
+                <li>
+                    <span class="label">Comms & Power</span>
+                    <span class="desc">10,000mAh Powerbank. 4G signal is intermittent in deep ravines (Casaroro).</span>
+                </li>
+                <li>
+                    <span class="label">Hydration System</span>
+                    <span class="desc">Minimum 1.5L capacity. Mountain springs are beautiful but may cause stomach distress.</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="checkpoint">
+        <h2 style="margin-bottom: 10px;">Pre-Departure Checklist</h2>
+        <p style="font-size: 0.9rem; color: #888; margin-bottom: 20px;">Review these points before leaving Dumaguete City limits:</p>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; font-size: 0.85rem;">
+            <div>[ ] Cash secured (No ATMs in Highland Sectors)</div>
+            <div>[ ] Dry-bag sealed for electronics</div>
+            <div>[ ] Emergency contact numbers saved</div>
+            <div>[ ] Rain poncho easily accessible</div>
+            <div>[ ] Tourism registration verified (for Mt. Talinis)</div>
+            <div>[ ] Sun/Insect protection applied</div>
+        </div>
+    </div>
+
+    <footer style="text-align: center; margin-top: 50px; border-top: 1px solid #222; padding-top: 20px; font-size: 0.7rem; color: #444;">
+        VALENCIA EXPEDITION INTEL // DATA VERIFIED BY FIELD OPS // 2026
+    </footer>
+</div>
+
+</body>
+</html>

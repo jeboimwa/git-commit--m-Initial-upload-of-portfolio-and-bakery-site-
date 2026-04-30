@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Weather Intel - 12 Sector Forecast</title>
+    <style>
+        :root { --gold: #f0c674; --bg: #0d0d0d; --card: #151515; }
+        body { background: var(--bg); color: #eee; font-family: monospace; padding: 40px; }
+        h1 { color: var(--gold); border-bottom: 2px solid var(--gold); padding-bottom: 10px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+        .report { background: var(--card); border: 1px solid #333; padding: 20px; position: relative; }
+        .report::before { content: "DATA_STRM"; position: absolute; top: 5px; right: 10px; font-size: 0.6rem; color: #444; }
+        h3 { color: var(--gold); margin: 0 0 10px 0; text-transform: uppercase; }
+        .meta { color: #888; font-size: 0.8rem; margin-bottom: 15px; }
+        .detail { color: #81a1c1; border-top: 1px solid #222; padding-top: 10px; }
+    </style>
+</head>
+<body>
+    <a href="index.html" style="color:var(--gold); text-decoration:none;">[ < BACK ]</a>
+    <h1>REGIONAL METEOROLOGY REPORTS</h1>
+    <div class="grid">
+        <div class="report"><h3>01. Casaroro Falls</h3><div class="meta">Status: Misty / Damp</div><p>High spray-induced humidity. Rocks are perpetually wet. Rain likelihood: 65% after 2PM.</p></div>
+        <div class="report"><h3>02. Pulangbato Falls</h3><div class="meta">Status: Clear / River-Cool</div><p>Lower valley winds. Moderate humidity. Ideal visibility for photography throughout the day.</p></div>
+        <div class="report"><h3>03. Red Rock Hot Spring</h3><div class="meta">Status: Steam Haze</div><p>Ambient temp raised by water activity. Feels 2°C warmer than surrounding forest.</p></div>
+        <div class="report"><h3>04. Forest Camp</h3><div class="meta">Status: Canopy Shaded</div><p>Direct sun blocked by trees. Temperatures remain steady at 22-24°C even at noon.</p></div>
+        <div class="report"><h3>05. Tierra Alta</h3><div class="meta">Status: High Wind Exposure</div><p>Unobstructed coastal winds. Light jackets recommended for sunset viewing.</p></div>
+        <div class="report"><h3>06. Tejero Highland</h3><div class="meta">Status: Sunny / Open</div><p>High UV exposure. Limited tree cover near slides. Peak heat between 11AM and 2PM.</p></div>
+        <div class="report"><h3>07. Cata-al Museum</h3><div class="meta">Status: Dry / Shielded</div><p>Indoor conditions. Perfect for escaping sudden highland downpours.</p></div>
+        <div class="report"><h3>08. Japanese Shrine</h3><div class="meta">Status: Brisk Mountain Air</div><p>Thinning air. Clouds often pass through the site during the monsoon season.</p></div>
+        <div class="report"><h3>09. Valencia Market</h3><div class="meta">Status: Urban Heat</div><p>Paved surfaces retain heat. 3°C warmer than higher altitude forest locations.</p></div>
+        <div class="report"><h3>10. Mount Talinis</h3><div class="meta">Status: UNPREDICTABLE</div><p>Sudden fog banks and temp drops to 14°C at night. Crucial: Check for storm signals.</p></div>
+        <div class="report"><h3>11. The Barn</h3><div class="meta">Status: Mild / Garden</div><p>Balanced microclimate. Protected from high winds by mango trees.</p></div>
+        <div class="report"><h3>12. Mag-aso Vents</h3><div class="meta">Status: Thermal Heat / Sulfurous</div><p>Heat radiating from earth. Air can feel heavy/acrid depending on wind direction.</p></div>
+    </div>
+</body>
+</html>
