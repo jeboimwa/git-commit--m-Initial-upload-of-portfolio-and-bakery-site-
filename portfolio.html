@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A COLLECTION OF WORK BY JB// Home</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron&family=JetBrains+Mono&display=swap" rel="stylesheet">
+    <style>
+        /* Small internal animation for the status badge flicker */
+        @keyframes blink {
+            0%, 100% { opacity: 1; text-shadow: 0 0 5px var(--neon-pink); }
+            50% { opacity: 0.2; text-shadow: none; }
+        }
+        .status-badge {
+            font-size: 0.6rem; 
+            border: 1px solid var(--neon-pink); 
+            padding: 4px 10px; 
+            margin-bottom: 20px; 
+            color: var(--neon-pink); 
+            letter-spacing: 2px;
+            animation: blink 1.5s infinite;
+        }
+    </style>
+</head>
+<body class="fade-in">
+
+    <div id="loader">
+        <h2 class="glitch" data-text="INITIALIZING_CORE...">LOADING SYSTEM_BOUT ME</h2>
+    </div>
+
+    <div class="cursor"></div>
+    <div class="scanlines"></div>
+    <canvas id="canvas-bg"></canvas>
+    
+    <nav>
+        <div class="logo">A COLLECTION OF WORK BY JB</div>
+        <ul class="nav-links">
+            <li><a href="portfolio.html" class="active">HOME</a></li>
+            <li><a href="about.html">ABOUT</a></li>
+            <li><a href="skills.html">SKILLS</a></li>
+            <li><a href="gallery.html">GALLERY</a></li>
+            <li><a href="projects.html">PROJECTS</a></li>
+            <li><a href="contact.html">TERMINAL</a></li>
+            <li><a href="matchgame.html">ARCADE</a></li>
+            <li><a href="bakeery/index.html">BAKERY</a></li>
+        </ul>
+    </nav>
+    
+    <div class="container">
+        <div class="status-badge">
+            ESTOLOGA, ALBEERTO V.
+        </div>
+
+        <h1 class="glitch" data-text="SYSTEM_ONLINE">SYSTEM_ONLINE</h1>
+        
+        <p class="typewriter">Welcome to my portfolio.</p>
+        
+        <div style="margin-top: 30px;">
+            <a href="gallery.html" class="cyber-btn">ENTER VISUAl</a>
+        </div>
+
+       <div class="glass-card social-widget" style="margin-top: 5rem; width: 350px; border-top: 2px solid var(--neon-blue);">
+    <p style="font-size: 0.7rem; opacity: 0.6; margin-bottom: 15px; letter-spacing: 4px; text-align: center;">// EXTERNAL_UPLINKS //</p>
+    
+    <div class="uplink-row">
+        <span>DISCORD</span>
+        <a href="https://discord.com/channels/@me" target="_blank" class="uplink-link">[ ACCESS_DISC ]</a>
+    </div>
+    
+    <div class="uplink-row">
+        <span>FACEBOOK</span>
+        <a href="https://www.facebook.com/jb.estologa" target="_blank" class="uplink-link">[ SYNC_PROFILE ]</a>
+    </div>
+
+    <div class="uplink-row">
+        <span>RESUME</span>
+        <a href="alberto_estologa_resume.pdf" class="uplink-link" style="color: var(--neon-green);">[ DOWNLOAD_PKG ]</a>
+    </div>
+</div>
+    
+    <script src="script.js"></script><div class="metadata-sidebar">
+    <div class="meta-group">
+        <span class="meta-label">SYSTEM_TIME</span>
+        <span id="meta-clock" class="meta-value">00:00:00</span>
+    </div>
+    <div class="meta-group">
+        <span class="meta-label">SESSION_UPTIME</span>
+        <span id="meta-uptime" class="meta-value">00:00:00</span>
+    </div>
+    <div class="meta-group">
+        <span class="meta-label">LOCATION_COORDS</span>
+        <span class="meta-value">34.0522° N, 118.2437° W</span>
+    </div>
+    <div class="meta-status">
+        <div class="status-dot"></div>
+        <span>ENCRYPTED_LINK_ACTIVE</span>
+    </div>
+</div>
+</body>
+</html>
